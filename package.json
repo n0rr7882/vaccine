@@ -9,8 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server-dev": "nodemon --exec babel-node server/index.js",
-    "server-start": "pm2 start --interpreter babel-node server/index.js"
+    "dev-server": "nodemon --exec babel-node server/index.js",
+    "prod-server": "pm2 start --interpreter babel-node server/index.js"
   },
   "private": true,
   "dependencies": {
