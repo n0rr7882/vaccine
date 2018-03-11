@@ -6,6 +6,8 @@ import cors from 'cors';
 
 import constants from './config/constants';
 
+import { auth } from './tools/authentication';
+
 import routes from './routes';
 
 import './database/db';
@@ -21,6 +23,8 @@ app.use(express.static(`${__dirname}/../dist`));
 app.use('/resources', express.static(`${__dirname}/resources`));
 app.use(fileUpload());
 app.use(cors());
+
+app.use(auth);
 
 app.use(routes);
 
