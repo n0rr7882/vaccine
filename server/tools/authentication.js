@@ -9,5 +9,12 @@ export function auth(req, res, next) {
             }
         });
     }
-    next();
+    return next();
 };
+
+export function filter(req, res, next) {
+    if (req.user && req.user.id) {
+        return next();
+    }
+    return res.send({ message: 'ACCESS_DENIED' });
+}

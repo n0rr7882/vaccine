@@ -5,7 +5,8 @@ import sign from './sign';
 import user from './user';
 import post from './post';
 import comment from './comment';
-import friends from './friends';
+import follow from './follow';
+import upload from './upload';
 
 const router = express.Router();
 
@@ -13,7 +14,8 @@ router.use('/sign', sign);
 router.use('/users', user);
 router.use('/posts', post);
 router.use('/comments', comment);
-router.use('/friends', friends);
+router.use('/follows', follow);
+router.use('/uploads', upload);
 router.use(error);
 
 export default router;

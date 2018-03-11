@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import User from '../database/models/User';
 import { checkProperty } from '../tools/validator';
-import { password } from '../tools/password';
+import { filter } from '../tools/authentication';
 
 const router = Router();
 
@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        data.data.password = password(data.data.password);
         const user = await User.create(data.data);
         return res.send({ message: 'SUCCESS', user });
 
@@ -59,7 +58,7 @@ router.get('/', async (req, res) => {
             .limit(Number(limit))
             .skip(Number(offset));
 
-        res.send({ message: 'SUCCESS', users });
+        return res.send({ message: 'SUCCESS', users });
 
     } catch (err) {
         return res.send({ message: err.message });
@@ -67,11 +66,38 @@ router.get('/', async (req, res) => {
 
 });
 
-router.put('/', async (req, res) => {
+router.put('/', filter, async (req, res) => {
+
+    try {
+
+        if ((await User.findOne({ email: req.body.email }))) {
+            throw new Error('EMAIL_ALREADY_EXIST');
+        }
+        const data = checkProperty(req.body, 'user', false);
+        if (data.message !== 'SUCCESS') {
+            throw new Error(data.message);
+        }
+        const user = await User.create(data.data);
+        return res.send({ message: 'SUCCESS', user });
+
+    } catch (err) {
+        return res.send({ message: err.message });
+    }
 
 });
 
-router.delete('/', async (req, res) => {
+router.delete('/', filter, async (req, res) => {
+
+    try {
+
+        const user = await User.findById(req.user.id);
+        if (!user) throw new Error('USER_NOT_FOUND');
+        await user.destroy();
+        return res.send({ message: 'SUCCESS' });
+
+    } catch (err) {
+        return res.send({ message: err.message });
+    }
 
 });
 
