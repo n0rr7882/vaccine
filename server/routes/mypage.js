@@ -19,7 +19,8 @@ router.get('/followings-posts', filter, async (req, res) => {
             .where('author')
             .in([req.user.id.toString(), ...me.followers.map(item => item.toString())])
             .skip(Number(offset))
-            .limit(Number(limit));
+            .limit(Number(limit))
+            .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
@@ -36,7 +37,8 @@ router.get('/liked-posts', filter, async (req, res) => {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
         const posts = await Post.find()
-            .where('goods', req.user.id.toString());
+            .where('goods', req.user.id.toString())
+            .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
@@ -53,7 +55,27 @@ router.get('/commented-posts', filter, async (req, res) => {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
         const posts = await Post.find()
-            .where('comments.author', req.user.id.toString());
+            .where('comments.author', req.user.id.toString())
+            .sort('-createdAt');
+        return res.send({ message: 'SUCCESS', posts });
+
+    } catch ({ message }) {
+        return res.send({ message });
+    }
+
+});
+
+router.get('/my-posts', filter, async (req, res) => {
+
+    try {
+
+        const { limit, offset } = req.query;
+        if (!(limit && offset)) {
+            throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
+        }
+        const posts = await Post.find()
+            .where('author', req.user.id.toString())
+            .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
@@ -66,7 +88,10 @@ router.get('/me', filter, async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.user.id).populate('followers').populate('followings');
+        const user = await User.findById(req.user.id)
+            .populate('followers')
+            .populate('followings')
+            .sort('-createdAt');
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {

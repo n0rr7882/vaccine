@@ -22,17 +22,4 @@ router.post('/', async (req, res) => {
 
 });
 
-router.get('/', filter, async (req, res) => {
-
-    try {
-
-        const user = await User.findById(req.user.id);
-        return res.send({ message: 'SUCCESS', user });
-
-    } catch ({ message }) {
-        return res.send({ message });
-    }
-
-});
-
 export default router;

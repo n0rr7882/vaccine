@@ -60,19 +60,22 @@ router.get('/', async (req, res) => {
 
 });
 
-router.put('/', filter, async (req, res) => {
+router.put('/:userId', filter, async (req, res) => {
 
     try {
 
-        if ((await User.findOne({ email: req.body.email }))) {
-            throw new Error('EMAIL_ALREADY_EXIST');
+        const user = await User.findById(req.params.userId);
+        if (!user) throw new Error('USER_NOT_FOUND');
+        if (req.user.id.toString() !== user._id.toString()) {
+            throw new Error('ACCESS_DENIED');
         }
         const data = checkProperty(req.body, 'user', false);
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        const user = await User.create(data.data);
-        return res.send({ message: 'SUCCESS', user });
+        const { username, password } = data.data;
+        const result = await User.update({ _id: req.params.userId }, { username, password });
+        return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
         return res.send({ message });
@@ -80,14 +83,17 @@ router.put('/', filter, async (req, res) => {
 
 });
 
-router.delete('/', filter, async (req, res) => {
+router.delete('/:userId', filter, async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.params.userId);
         if (!user) throw new Error('USER_NOT_FOUND');
-        await user.destroy();
-        return res.send({ message: 'SUCCESS' });
+        if (req.user.id.toString() !== user._id) {
+            throw new Error('ACCESS_DENIED');
+        }
+        const result = await user.destroy();
+        return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
         return res.send({ message });
