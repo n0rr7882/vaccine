@@ -65,7 +65,7 @@ router.put('/:postId', filter, async (req, res) => {
     try {
 
         const post = await Post.findById(req.params.postId);
-        if (req.user.id.toString() !== post.author) {
+        if (req.user.id.toString() !== post.author.toString()) {
             throw new Error('ACCESS_DENIED');
         }
         const data = checkProperty(req.body, 'post', false);
@@ -73,8 +73,8 @@ router.put('/:postId', filter, async (req, res) => {
             throw new Error(data.message);
         }
         post.hashtags = data.data.contents.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
-        post.contents = data.data.contents;
-        post.title = data.data.title;
+        if (data.data.contents) post.contents = data.data.contents;
+        if (data.data.title) post.title = data.data.title;
         const result = await post.save();
         return res.send({ message: 'SUCCESS', result });
 

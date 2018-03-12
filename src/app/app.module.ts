@@ -3,14 +3,25 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { TimelineComponent } from './timeline/timeline.component';
+import { FollowsComponent } from './follows/follows.component';
+import { SearchComponent } from './search/search.component';
+import { MypageComponent } from './mypage/mypage.component';
+
+import { DevlogRoutingModule } from './devlog-routing.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TimelineComponent,
+    FollowsComponent,
+    SearchComponent,
+    MypageComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    DevlogRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

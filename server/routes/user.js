@@ -46,8 +46,11 @@ router.get('/', async (req, res) => {
         if (!(limit && offset)) {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
+        if (!q) {
+            throw new Error('QUERY_Q_NOT_EXIST');
+        }
         const users = await User
-            .find({ $or: [{ username: { $regex: q } }, { email: { $regex: q } }] }, { score: { $meta: 'textScore' } })
+            .find({ $or: [{ username: { $regex: RegExp(q, 'i') } }, { email: { $regex: RegExp(q, 'i') } }] }, { score: { $meta: 'textScore' } })
             .sort({ score: { $meta: 'textScore' } })
             .limit(Number(limit))
             .skip(Number(offset));
@@ -73,8 +76,10 @@ router.put('/:userId', filter, async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        const { username, password } = data.data;
-        const result = await User.update({ _id: req.params.userId }, { username, password });
+        const updated = {};
+        if (data.data.username) updated.username = data.data.username;
+        if (data.data.password) updated.password = data.data.password;
+        const result = await User.update({ _id: req.params.userId }, updated);
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {

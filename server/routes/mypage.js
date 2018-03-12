@@ -18,6 +18,7 @@ router.get('/followings-posts', filter, async (req, res) => {
         const posts = await Post.find()
             .where('author')
             .in([req.user.id.toString(), ...me.followers.map(item => item.toString())])
+            .populate('author')
             .skip(Number(offset))
             .limit(Number(limit))
             .sort('-createdAt');
@@ -38,6 +39,7 @@ router.get('/liked-posts', filter, async (req, res) => {
         }
         const posts = await Post.find()
             .where('goods', req.user.id.toString())
+            .populate('author')
             .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
@@ -56,6 +58,7 @@ router.get('/commented-posts', filter, async (req, res) => {
         }
         const posts = await Post.find()
             .where('comments.author', req.user.id.toString())
+            .populate('author')
             .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
@@ -75,6 +78,7 @@ router.get('/my-posts', filter, async (req, res) => {
         }
         const posts = await Post.find()
             .where('author', req.user.id.toString())
+            .populate('author')
             .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
