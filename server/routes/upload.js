@@ -21,8 +21,8 @@ router.post('/thumbnail', filter, async (req, res) => {
                 return res.send({ message: 'SUCCESS', url: `/resources/thumbnails/${req.user.id}.jpg` });
             });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });

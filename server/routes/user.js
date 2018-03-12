@@ -19,8 +19,8 @@ router.post('/', async (req, res) => {
         const user = await User.create(data.data);
         return res.send({ message: 'SUCCESS', user });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -29,17 +29,11 @@ router.get('/:username', async (req, res) => {
 
     try {
 
-        if (!req.params.username) {
-            throw new Error('INVALID_USERNAME');
-        }
         const user = await User.findOne({ username: req.params.username });
-        if (!user) {
-            throw new Error('USER_NOT_FOUND');
-        }
         return res.send({ message: 'SUCCESS', user });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -60,8 +54,8 @@ router.get('/', async (req, res) => {
 
         return res.send({ message: 'SUCCESS', users });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -80,8 +74,8 @@ router.put('/', filter, async (req, res) => {
         const user = await User.create(data.data);
         return res.send({ message: 'SUCCESS', user });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -95,8 +89,8 @@ router.delete('/', filter, async (req, res) => {
         await user.destroy();
         return res.send({ message: 'SUCCESS' });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });

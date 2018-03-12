@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
             return res.send({ message: 'SUCCESS', token: token });
         } else throw new Error('INVALID_EMAIL_OR_PASSWORD');
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -29,8 +29,8 @@ router.get('/', filter, async (req, res) => {
         const user = await User.findById(req.user.id);
         return res.send({ message: 'SUCCESS', user });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });

@@ -26,8 +26,8 @@ router.post('/', filter, async (req, res) => {
         target.save();
         return res.send({ message: 'SUCCESS' });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });
@@ -50,8 +50,8 @@ router.delete('/', filter, async (req, res) => {
         target.save();
         return res.send({ message: 'SUCCESS' });
 
-    } catch (err) {
-        return res.send({ message: err.message });
+    } catch ({ message }) {
+        return res.send({ message });
     }
 
 });

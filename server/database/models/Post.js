@@ -2,11 +2,11 @@ import mongoose, { Schema } from 'mongoose';
 
 const postSchema = new Schema({
     title: { type: String, required: true },
-    tags: { type: String, required: true },
-    authorId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
+    hashtags: [{ type: String, required: true }],
+    author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
     contents: { type: String, required: true },
     comments: [{
-        authorId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
+        author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
         contents: { type: String, required: true },
         createdAt: { type: Date, required: true, default: Date.now },
         goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }]

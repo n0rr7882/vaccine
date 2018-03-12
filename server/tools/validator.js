@@ -6,7 +6,6 @@ export const CHECK_LIST = {
     ],
     post: [
         { property: 'title', reg: /^(?=.*).{1,50}$/, message: 'INVALID_TITLE' },
-        { property: 'tags', reg: /^(?=.*).{1,50}$/, message: 'INVALID_TAGS' },
         { property: 'contents', reg: /^(?=.*).+$/m, message: 'INVALID_CONTENTS' }
     ],
     comment: [
