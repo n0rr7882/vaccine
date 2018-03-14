@@ -8,6 +8,7 @@ import comment from './comment';
 import follow from './follow';
 import upload from './upload';
 import mypage from './mypage';
+import search from './search';
 
 const router = express.Router();
 
@@ -17,7 +18,8 @@ router.use('/posts', post);
 router.use('/comments', comment);
 router.use('/follows', follow);
 router.use('/uploads', upload);
-router.use('/mypage', mypage);
+router.use('/mypages', mypage);
+router.use('/search', search);
 router.use(error);
 
 export default router;

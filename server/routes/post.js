@@ -13,8 +13,8 @@ router.post('/', filter, async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        data.data.hashtags = data.data.contents.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
-        data.data.authorId = req.user.id;
+        data.data.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
+        data.data.author = req.user.id;
         const post = await Post.create(data.data);
         return res.send({ message: 'SUCCESS', post });
 
@@ -31,7 +31,11 @@ router.get('/:postId', async (req, res) => {
 
         const post = await Post.findById(req.params.postId)
             .populate('author')
-            .populate('comments');
+            .populate('comments')
+            .populate('comments.author');
+        if (!post) {
+            throw new Error('POST_NOT_FOUND');
+        }
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
@@ -65,6 +69,9 @@ router.put('/:postId', filter, async (req, res) => {
     try {
 
         const post = await Post.findById(req.params.postId);
+        if (!post) {
+            throw new Error('POST_NOT_FOUND');
+        }
         if (req.user.id.toString() !== post.author.toString()) {
             throw new Error('ACCESS_DENIED');
         }
@@ -72,9 +79,8 @@ router.put('/:postId', filter, async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        post.hashtags = data.data.contents.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
-        if (data.data.contents) post.contents = data.data.contents;
-        if (data.data.title) post.title = data.data.title;
+        post.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
+        if (data.data.content) post.content = data.data.content;
         const result = await post.save();
         return res.send({ message: 'SUCCESS', result });
 
@@ -89,7 +95,9 @@ router.delete('/:postId', filter, async (req, res) => {
     try {
 
         const post = await Post.findById(req.params.postId);
-        if (!post) throw new Error('POST_NOT_FOUND');
+        if (!post) {
+            throw new Error('POST_NOT_FOUND');
+        }
         if (req.user.id.toString() !== post.author) {
             throw new Error('ACCESS_DENIED');
         }

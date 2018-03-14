@@ -10,11 +10,12 @@ router.post('/', async (req, res) => {
 
     try {
 
-        const signedUser = await User.findOne({ email: req.body.email });
-        if (signedUser && signedUser.comparePassword(req.body.password)) {
-            const token = sign({ id: signedUser._id }, constants.JWT_SALT);
-            return res.send({ message: 'SUCCESS', token: token });
-        } else throw new Error('INVALID_EMAIL_OR_PASSWORD');
+        const user = (await User.login(req.body.email, req.body.password))[0];
+        if (!user) {
+            throw new Error('INVALID_EMAIL_OR_PASSWORD');
+        }
+        const token = sign({ id: user._id }, constants.JWT_SALT);
+        return res.send({ message: 'SUCCESS', token: token });
 
     } catch ({ message }) {
         return res.send({ message });

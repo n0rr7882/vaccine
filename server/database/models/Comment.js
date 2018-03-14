@@ -1,11 +1,11 @@
 import mongoose, { Schema } from 'mongoose';
 
-const postSchema = new Schema({
-    hashtags: [{ type: String, required: true }],
+const commentSchema = new Schema({
+    post: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'post' },
     author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
     content: { type: String, required: true },
-    comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'comment' }],
+    createdAt: { type: Date, required: true, default: Date.now },
     goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }]
 }, { timestamps: true });
 
-export default mongoose.model('post', postSchema);
+export default mongoose.model('comment', commentSchema);

@@ -5,11 +5,10 @@ export const CHECK_LIST = {
         { property: 'password', reg: /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,20}$/, message: 'INVALID_PASSWORD' }
     ],
     post: [
-        { property: 'title', reg: /^(?=.*).{1,50}$/, message: 'INVALID_TITLE' },
-        { property: 'contents', reg: /^(?=.*).+$/m, message: 'INVALID_CONTENTS' }
+        { property: 'content', reg: /^(?=.*).+$/m, message: 'INVALID_CONTENT' }
     ],
     comment: [
-        { property: 'contents', reg: /^(?=.*).+$/m, message: 'INVALID_CONTENTS' }
+        { property: 'content', reg: /^(?=.*).+$/m, message: 'INVALID_CONTENT' }
     ]
 };
 
