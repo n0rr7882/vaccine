@@ -15,6 +15,12 @@
     - `GET /`
     - `PUT /{postId}`
     - `DELETE /{postId}`
+- /comments
+    - `POST /{postId}`
+    - `GET /{commentId}`
+    - `GET /`
+    - `PUT /{commentId}`
+    - `DELETE /{commentId}`
 - /mypages
     - `GET /me`
     - `GET /followings-posts`
@@ -26,12 +32,6 @@
     - `DELETE /`
 - /uploads
     - `POST /thumbnail`
-- /comments
-    - `POST /{postId}`
-    - `GET /{commentId}`
-    - `GET /`
-    - `PUT /{commentId}`
-    - `DELETE /{commentId}`
 - /search
     - `GET /users`
 
@@ -203,7 +203,7 @@ request body
     "result": {
         "followers": [],
         "followings": [],
-        "_id": "5aa8c3b5062cd8f925aff117",
+        "_id": "5aa8c3b5062cd8...",
         "username": "TestId1",
         "email": "test1@gmail.com",
         "createdAt": "2018-03-14T06:39:49.315Z",
@@ -241,7 +241,7 @@ request params
     "result": {
         "followers": [],
         "followings": [],
-        "_id": "5aa8c3b5062cd8f925aff117",
+        "_id": "5aa8c3b5062cd8f...",
         "username": "TestId1",
         "email": "test1@gmail.com",
         "createdAt": "2018-03-14T06:39:49.315Z",
@@ -286,8 +286,7 @@ request body
         "goods": [],
         "_id": "5aa8ea813e869...",
         "createdAt": "2018-03-14T09:25:21.953Z",
-        "updatedAt": "2018-03-14T09:25:21.953Z",
-        "__v": 0
+        "updatedAt": "2018-03-14T09:25:21.953Z"
     }
 }
 ```
@@ -295,5 +294,230 @@ request body
 - on failure
 
 ```json
+{
+    "message": "INVALID_CONTENT"
+}
+```
 
+## `GET /posts/{postId}`
+
+### request
+
+```http
+request params
+    postId: 5aa8ebe13e869d...
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "post": {
+        "hashtags": [
+            "#post"
+        ],
+        "comments": [],
+        "goods": [],
+        "_id": "5aa8ebe13e869d...",
+        "content": "this is test #post yeah!@!",
+        "author": {
+            "followers": [],
+            "followings": [],
+            "_id": "5aa8c788e497c9...",
+            "username": "TestId3",
+            "email": "test3@gmail.com",
+            "createdAt": "2018-03-14T06:56:08.805Z",
+            "updatedAt": "2018-03-14T06:56:08.805Z"
+        },
+        "createdAt": "2018-03-14T09:31:13.435Z",
+        "updatedAt": "2018-03-14T09:31:13.435Z"
+    }
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "POST_NOT_FOUND"
+}
+```
+
+## `GET /posts`
+
+### request
+
+```http
+request queries
+    limit: 10
+    offset: 0
+    by: hashtags
+    q: post
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "posts": [
+        {
+            "hashtags": [
+                "#post"
+            ],
+            "comments": [],
+            "goods": [],
+            "_id": "5aa8ebe13e869d0...",
+            "content": "this is test #post yeah!@!",
+            "author": {
+                "followers": [],
+                "followings": [],
+                "_id": "5aa8c788e497c9f...",
+                "username": "TestId3",
+                "email": "test3@gmail.com",
+                "createdAt": "2018-03-14T06:56:08.805Z",
+                "updatedAt": "2018-03-14T06:56:08.805Z"
+            },
+            "createdAt": "2018-03-14T09:31:13.435Z",
+            "updatedAt": "2018-03-14T09:31:13.435Z"
+        }
+    ]
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "BY_OR_Q_NOT_EXIST"
+}
+```
+
+## `PUT /posts/{postId}`
+
+### request
+
+```http
+request headers
+    Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+request params
+    postId: 5aa8c3b5062cd...
+request body
+    content: This is content ....
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "result": {
+        "hashtags": [
+            "#comment"
+        ],
+        "comments": [],
+        "goods": [],
+        "_id": "5aa8ebe13e869d01...",
+        "content": "this is test #comment yeah!@!",
+        "author": "5aa8c788e497c9fa...",
+        "createdAt": "2018-03-14T09:31:13.435Z",
+        "updatedAt": "2018-03-14T09:45:08.467Z"
+    }
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "POST_NOT_FOUND"
+}
+```
+
+## `DELETE /posts/{postId}`
+
+### request
+
+```http
+request headers
+    Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+request params
+    postId: 5aa8c3b5062cd...
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "result": {
+        "hashtags": [
+            "#comment"
+        ],
+        "comments": [],
+        "goods": [],
+        "_id": "5aa8ebe13e869d0...",
+        "content": "this is test #comment yeah!@!",
+        "author": "5aa8c788e497c9f...",
+        "createdAt": "2018-03-14T09:31:13.435Z",
+        "updatedAt": "2018-03-14T09:45:08.467Z"
+    }
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "POST_NOT_FOUND"
+}
+```
+
+## `POST /comments/{postId}`
+
+### request
+
+```http
+request headers
+    Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6Ik...
+request params
+    postId: 5aa8c3b5062cd...
+request body
+    content: Yeah! comment! ...
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "comment": {
+        "post": "5aa9535a3df4060...",
+        "author": "5aa8c6f56cd7f5fa...",
+        "content": "yeah this is commentasdf",
+        "createdAt": "2018-03-14T17:14:16.822Z",
+        "goods": [],
+        "_id": "5aa9586833e858...",
+        "updatedAt": "2018-03-14T17:14:16.822Z"
+    }
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "POST_NOT_FOUND"
+}
 ```

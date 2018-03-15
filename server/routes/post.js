@@ -52,10 +52,14 @@ router.get('/', async (req, res) => {
         if (!(limit && offset)) {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
+        if (!(by && q)) {
+            throw new Error('BY_OR_Q_NOT_EXIST');
+        }
         const posts = await Post.find()
             .where(by, RegExp(q))
-            .skip(offset)
-            .limit(limit)
+            .populate('author')
+            .skip(Number(offset))
+            .limit(Number(limit))
             .sort('-createdAt');
         return res.send({ message: 'SUCCESS', posts });
 
@@ -73,7 +77,7 @@ router.put('/:postId', filter, async (req, res) => {
             throw new Error('POST_NOT_FOUND');
         }
         if (req.user.id.toString() !== post.author.toString()) {
-            throw new Error('ACCESS_DENIED');
+            throw new Error('PERMISSION_DENIED');
         }
         const data = checkProperty(req.body, 'post', false);
         if (data.message !== 'SUCCESS') {
@@ -98,10 +102,10 @@ router.delete('/:postId', filter, async (req, res) => {
         if (!post) {
             throw new Error('POST_NOT_FOUND');
         }
-        if (req.user.id.toString() !== post.author) {
-            throw new Error('ACCESS_DENIED');
+        if (req.user.id.toString() !== post.author.toString()) {
+            throw new Error('PERMISSION_DENIED');
         }
-        const result = await post.destroy();
+        const result = await post.remove();
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {

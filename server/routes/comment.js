@@ -14,14 +14,15 @@ router.post('/:postId', filter, async (req, res) => {
         if (!post) {
             throw new Error('POST_NOT_FOUND');
         }
-        const { message, data: { content } } = checkProperty(req.body, 'comment', true);
-        if (message !== 'SUCCESS') {
-            throw new Error(message);
+        const data = checkProperty(req.body, 'comment', true);
+        if (data.message !== 'SUCCESS') {
+            throw new Error(data.message);
         }
-        const comment = Comment.create({ post: post._id, author: req.user.id, content });
+        const comment = await Comment.create({ post: post._id, author: req.user.id, content: data.data.content });
         post.comments.push(comment._id);
-        const result = post.save();
-        return res.send({ message: 'SUCCESS', result });
+        post.save();
+        comment.__v = undefined;
+        return res.send({ message: 'SUCCESS', comment });
 
     } catch ({ message }) {
         return res.send({ message });
@@ -76,6 +77,9 @@ router.put('/:commentId', filter, async (req, res) => {
         const comment = await Comment.findById(req.params.commentId);
         if (!comment) {
             throw new Error('COMMENT_NOT_FOUND');
+        }
+        if (req.user.id.toString() !== comment.author.toString()) {
+            throw new Error('PERMISSION_DENIED');
         }
         const { message, data: { content } } = checkProperty(req.body, 'comment', false);
         if (message !== 'SUCCESS') {

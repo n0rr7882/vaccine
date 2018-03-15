@@ -30,7 +30,9 @@ router.get('/:userId', async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.params.userId);
+        const user = await User.findById(req.params.userId)
+            .populate('followers')
+            .populate('followings');
         if (!user) {
             throw new Error('USER_NOT_FOUND');
         }
@@ -55,6 +57,8 @@ router.get('/', async (req, res) => {
         }
         const users = await User.find()
             .where(by, RegExp(q))
+            .populate('followers')
+            .populate('followings')
             .skip(Number(offset))
             .limit(Number(limit))
             .sort('-createdAt');
@@ -75,7 +79,7 @@ router.put('/:userId', filter, async (req, res) => {
             throw new Error('USER_NOT_FOUND');
         }
         if (req.user.id.toString() !== user._id.toString()) {
-            throw new Error('ACCESS_DENIED');
+            throw new Error('PERMISSION_DENIED');
         }
         if (req.body.email && (await User.findOne({ email: req.body.email }))) {
             throw new Error('EMAIL_ALREADY_EXIST');
@@ -104,7 +108,7 @@ router.delete('/:userId', filter, async (req, res) => {
         const user = await User.findById(req.params.userId);
         if (!user) throw new Error('USER_NOT_FOUND');
         if (req.user.id.toString() !== user._id.toString()) {
-            throw new Error('ACCESS_DENIED');
+            throw new Error('PERMISSION_DENIED');
         }
         const result = await user.remove();
         return res.send({ message: 'SUCCESS', result });

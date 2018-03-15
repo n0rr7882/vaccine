@@ -8,4 +8,13 @@ const commentSchema = new Schema({
     goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }]
 }, { timestamps: true });
 
+function remove__v(next) {
+    this.select('-__v');
+    return next();
+}
+
+commentSchema.pre('find', remove__v);
+commentSchema.pre('findOne', remove__v);
+commentSchema.pre('findById', remove__v);
+
 export default mongoose.model('comment', commentSchema);

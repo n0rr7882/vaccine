@@ -8,4 +8,13 @@ const postSchema = new Schema({
     goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }]
 }, { timestamps: true });
 
+function remove__v(next) {
+    this.select('-__v');
+    return next();
+}
+
+postSchema.pre('find', remove__v);
+postSchema.pre('findOne', remove__v);
+postSchema.pre('findById', remove__v);
+
 export default mongoose.model('post', postSchema);
