@@ -119,12 +119,24 @@ request params
     "message": "SUCCESS",
     "user": {
         "followers": [],
-        "followings": [],
-        "_id": "5aa8c3b5062cd...",
-        "username": "TestId1",
-        "email": "test1@gmail.com",
-        "createdAt": "2018-03-14T06:39:49.315Z",
-        "updatedAt": "2018-03-14T06:39:49.315Z"
+        "followings": [
+            {
+                "followers": [
+                    "5aa8c6f56cd7f5fa..."
+                ],
+                "followings": [],
+                "_id": "5aa8c788e497c9fa...",
+                "username": "TestId3",
+                "email": "test3@gmail.com",
+                "createdAt": "2018-03-14T06:56:08.805Z",
+                "updatedAt": "2018-03-15T00:17:37.675Z"
+            }
+        ],
+        "_id": "5aa8c6f56cd7f5fa...",
+        "username": "TestId2",
+        "email": "test2@gmail.com",
+        "createdAt": "2018-03-14T06:53:41.273Z",
+        "updatedAt": "2018-03-15T00:17:37.674Z"
     }
 }
 ```
@@ -158,13 +170,25 @@ request queries
     "message": "SUCCESS",
     "users": [
         {
-            "followers": [],
+            "followers": [
+                {
+                    "followers": [],
+                    "followings": [
+                        "5aa8c788e497c9f..."
+                    ],
+                    "_id": "5aa8c6f56cd7f5...",
+                    "username": "TestId2",
+                    "email": "test2@gmail.com",
+                    "createdAt": "2018-03-14T06:53:41.273Z",
+                    "updatedAt": "2018-03-15T00:17:37.674Z"
+                }
+            ],
             "followings": [],
-            "_id": "5aa8c826eea4b2...",
-            "username": "TestId5",
-            "email": "test5@gmail.com",
-            "createdAt": "2018-03-14T06:58:46.327Z",
-            "updatedAt": "2018-03-14T06:58:46.327Z"
+            "_id": "5aa8c788e497c9f...",
+            "username": "TestId3",
+            "email": "test3@gmail.com",
+            "createdAt": "2018-03-14T06:56:08.805Z",
+            "updatedAt": "2018-03-15T00:17:37.675Z"
         }
     ]
 }
@@ -520,4 +544,66 @@ request body
 {
     "message": "POST_NOT_FOUND"
 }
+```
+
+## `GET /comments/{commentId}`
+
+### request
+
+```http
+request params
+    commentId: 5aa9586833e85...
+```
+
+### response
+
+- on success
+
+```json
+{
+    "message": "SUCCESS",
+    "comment": {
+        "createdAt": "2018-03-14T17:14:16.822Z",
+        "goods": [],
+        "_id": "5aa9586833e8580d...",
+        "post": "5aa9535a3df406048...",
+        "author": "5aa8c6f56cd7f5fa8...",
+        "content": "yeah this is commentasdf",
+        "updatedAt": "2018-03-14T17:14:16.822Z"
+    }
+}
+```
+
+- on failure
+
+```json
+{
+    "message": "COMMENT_NOT_FOUND"
+}
+```
+
+## `GET /comments`
+
+### request
+
+```http
+request queries
+    limit: 10
+    offset: 0
+    by: post
+    q: 5aa9535a3df406048...
+```
+
+### response
+
+- on success
+
+```json
+
+```
+
+- on failure
+
+```json
+
 ```

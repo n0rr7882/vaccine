@@ -1,0 +1,9 @@
+main {
+    display: flex;
+    flex-direction: column;
+    background: #fafafa;
+}
+
+router-outlet {
+    margin-top: 60px;
+}

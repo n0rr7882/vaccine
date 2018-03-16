@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 import { AppComponent } from './app.component';
@@ -9,6 +10,10 @@ import { SearchComponent } from './search/search.component';
 import { MypageComponent } from './mypage/mypage.component';
 
 import { DevlogRoutingModule } from './devlog-routing.module';
+import { NavComponent } from './nav/nav.component';
+import { RegisterComponent } from './register/register.component';
+import { PostCardComponent } from './post-card/post-card.component';
+import { UserCardComponent } from './user-card/user-card.component';
 
 
 @NgModule({
@@ -17,11 +22,16 @@ import { DevlogRoutingModule } from './devlog-routing.module';
     TimelineComponent,
     FollowsComponent,
     SearchComponent,
-    MypageComponent
+    MypageComponent,
+    NavComponent,
+    RegisterComponent,
+    PostCardComponent,
+    UserCardComponent
   ],
   imports: [
     BrowserModule,
-    DevlogRoutingModule
+    DevlogRoutingModule,
+    AngularFontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
