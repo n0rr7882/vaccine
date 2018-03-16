@@ -85,7 +85,7 @@ fa {
 }
 .search>input:focus {
     width: 100%;
-    border: 1px solid rgb(21,152,103);
+    border: 1px solid #159867;
     background: #ffffff;
     text-align: start;
 }
