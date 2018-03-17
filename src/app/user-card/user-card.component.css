@@ -1,0 +1,84 @@
+.card {
+    margin: 10px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.user-thumbnail {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: #abcdef;
+}
+
+.user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.user-name {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.user-email {
+    font-size: medium;
+    font-weight: lighter;
+    color: gray;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+}
+
+.button {
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+}
+
+.button.unfollow {
+    border: 1px solid rgb(255, 97, 97);
+    color: rgb(255, 97, 97);
+}
+
+.button.follow {
+    border: 1px solid rgb(21,152,103);
+    color: rgb(21,152,103);
+}
+
+.button.unfollow:hover {
+    background: rgb(255, 97, 97);
+    color: #ffffff;
+}
+
+.button.follow:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}
+
+@media screen and (max-width: 480px) {
+    .card {
+        flex-direction: column;
+    }
+    .user-thumbnail {
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+    }
+    .user-info {
+        text-align: center;
+        margin: 10px;
+    }
+}

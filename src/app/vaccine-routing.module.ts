@@ -11,7 +11,6 @@ const routes: Routes = [
     { path: '', redirectTo: 'timeline', pathMatch: 'full' },
     { path: 'timeline', component: TimelineComponent },
     { path: 'follows', component: FollowsComponent },
-    { path: 'search', component: SearchComponent },
     { path: 'mypage', component: MypageComponent }
 ];
 

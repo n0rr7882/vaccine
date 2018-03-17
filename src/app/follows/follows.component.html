@@ -1,3 +1,10 @@
-<p>
-  follows works!
-</p>
+<section>
+  <div class="wrapper">
+    <h2>Followings</h2>
+    <app-user-card *ngFor="let post of [0,1,2,3,4,5]"></app-user-card>
+  </div>
+  <div class="wrapper">
+    <h2>Followers</h2>
+    <app-user-card *ngFor="let post of [0,1,2,3,4,5]"></app-user-card>
+  </div>
+</section>

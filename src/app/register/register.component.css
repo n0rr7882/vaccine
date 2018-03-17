@@ -1,0 +1,148 @@
+.background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: -1;
+    background-position: center;
+    background-size: cover;
+    background-image: url(/assets/backgrounds/background.jpg);
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(0, 0, 0, 0.75)
+}
+
+.mainpage {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.jumbo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.logo {
+    width: 300px;
+    height: 300px;
+    background-image: url(/assets/icons/vaccine.png);
+    background-position: center;
+    background-size: contain;
+    filter: brightness(1.5);
+}
+
+.jumbo h1 {
+    color: rgb(43, 224, 158);
+    margin: 0;
+    font-size: 4em;
+    font-weight: bolder;
+
+}
+
+.jumbo h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #e0e0e0;
+}
+
+.register {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.signup, .signin {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px;
+    background-color: white;
+}
+
+.signin {
+    border-radius: 10px 10px 0 0;
+}
+
+.signup {
+    border-radius: 0 0 10px 10px;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+input {
+    outline: none;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 7px;
+    width: 100%;
+    font-size: small;
+    text-align: center;
+    margin: 5px 0;
+}
+
+input:focus {
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+    text-align: start;
+}
+
+a {
+    font-size: small;
+    text-align: center;
+    color: gray;
+    text-decoration: none;
+    margin: 5px;
+}
+
+a:hover {
+    color: black;
+}
+
+button {
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+    border: 1px solid rgb(21,152,103);
+    color: rgb(21,152,103);
+    margin: 5px 0;
+}
+
+button:hover, button.active {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}
+
+button.active:hover {
+    background: rgb(12, 124, 83);
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        height: auto;
+        flex-direction: column;
+    }
+    .register {
+        padding: 50px 0;
+    }
+}

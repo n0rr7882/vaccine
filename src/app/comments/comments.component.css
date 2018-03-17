@@ -74,3 +74,6 @@ a {
     color: gray;
 }
 
+.comment-delete:hover {
+    color: rgb(255, 97, 97);
+}
