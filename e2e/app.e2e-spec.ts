@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('devlog App', () => {
+describe('vaccine App', () => {
   let page: AppPage;
 
   beforeEach(() => {

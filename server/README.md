@@ -1,4 +1,4 @@
-# Devlog API
+# Vaccine API
 
 ## index
 - /sign

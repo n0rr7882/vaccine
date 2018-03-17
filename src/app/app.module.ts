@@ -9,7 +9,7 @@ import { FollowsComponent } from './follows/follows.component';
 import { SearchComponent } from './search/search.component';
 import { MypageComponent } from './mypage/mypage.component';
 
-import { DevlogRoutingModule } from './devlog-routing.module';
+import { VaccineRoutingModule } from './vaccine-routing.module';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { PostCardComponent } from './post-card/post-card.component';
@@ -30,7 +30,7 @@ import { UserCardComponent } from './user-card/user-card.component';
   ],
   imports: [
     BrowserModule,
-    DevlogRoutingModule,
+    VaccineRoutingModule,
     AngularFontAwesomeModule
   ],
   providers: [],
