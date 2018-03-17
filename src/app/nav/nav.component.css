@@ -33,7 +33,7 @@ a {
     color: gray;
 }
 
-a:hover, a.active {
+a:hover, .active {
     color: rgb(21,152,103);
 }
 
@@ -56,7 +56,7 @@ fa {
 .logo-icon {
     width: 30px;
     height: 30px;
-    background-image: url(/assets/icons/devlog.png);
+    background-image: url(/assets/icons/vaccine.png);
     background-position: center;
     background-size: contain;
     margin: 10px;
@@ -83,6 +83,7 @@ fa {
     font-size: small;
     text-align: center;
 }
+
 .search>input:focus {
     width: 100%;
     border: 1px solid #159867;
@@ -97,4 +98,8 @@ fa {
     .search {
         flex: 10 !important;
     }
+}
+
+.links * {
+    color: gray;
 }

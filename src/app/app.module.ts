@@ -14,6 +14,7 @@ import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { UserCardComponent } from './user-card/user-card.component';
+import { CommentsComponent } from './comments/comments.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { UserCardComponent } from './user-card/user-card.component';
     NavComponent,
     RegisterComponent,
     PostCardComponent,
-    UserCardComponent
+    UserCardComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,20 @@
+<div class="comments">
+  <div *ngFor="let i of [0,1,2,3,4,5]" class="comment">
+    <a href="/">
+      <div class="comment-thumbnail"></div>
+    </a>
+    <div class="comment-info">
+      <div class="comment-author-name">박건령</div>
+      <div class="comment-content">요기에다가 한글을 적으면 어떤 느낌일 날지 조금 궁금해지긴 했다.</div>
+    </div>
+    <div class="comment-delete">
+      <fa name="trash" size="lg"></fa>
+    </div>
+  </div>
+  <div class="comment-write">
+    <div class="comment-thumbnail"></div>
+    <div class="comment-form">
+      <input type="text" placeholder="Comment...">
+    </div>
+  </div>
+</div>
