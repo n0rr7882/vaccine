@@ -25,7 +25,7 @@ router.post('/:postId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', comment });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -41,7 +41,7 @@ router.get('/:commentId', async (req, res) => {
         return res.send({ message: 'SUCCESS', comment });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', comments });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -90,7 +90,7 @@ router.put('/:commentId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -112,7 +112,7 @@ router.delete('/:commentId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

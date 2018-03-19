@@ -19,6 +19,10 @@
     font-size: medium;
 }
 
+.card-contents-text {
+    font-size: larger;
+}
+
 .card-icons {
     display: flex;
     flex-direction: row;

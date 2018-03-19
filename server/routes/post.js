@@ -19,7 +19,7 @@ router.post('/', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -39,7 +39,7 @@ router.get('/:postId', async (req, res) => {
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 });
 
@@ -89,7 +89,7 @@ router.put('/:postId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -109,7 +109,7 @@ router.delete('/:postId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

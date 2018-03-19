@@ -26,7 +26,7 @@ app.use(cors());
 
 app.use(auth);
 
-app.use(routes);
+app.use('/api', routes);
 
 app.listen(constants.PORT, () => {
     console.log(`Server listen to port: ${constants.PORT}`);

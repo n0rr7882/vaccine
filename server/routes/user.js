@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -39,7 +39,7 @@ router.get('/:userId', async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', users });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -96,7 +96,7 @@ router.put('/:userId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -114,7 +114,7 @@ router.delete('/:userId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

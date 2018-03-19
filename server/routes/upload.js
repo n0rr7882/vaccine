@@ -22,7 +22,7 @@ router.post('/thumbnail', filter, async (req, res) => {
             });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

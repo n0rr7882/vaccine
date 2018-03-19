@@ -25,7 +25,7 @@ router.get('/users', async (req, res) => {
         return res.send({ message: 'SUCCESS', users });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

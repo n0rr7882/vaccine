@@ -25,7 +25,7 @@ router.get('/followings-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 });
 
@@ -44,7 +44,7 @@ router.get('/liked-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 });
 
@@ -63,7 +63,7 @@ router.get('/commented-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -83,7 +83,7 @@ router.get('/my-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
@@ -99,7 +99,7 @@ router.get('/me', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });

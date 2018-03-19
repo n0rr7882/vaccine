@@ -4,15 +4,15 @@ import User from '../database/models/User';
 
 const router = Router();
 
-router.post('/', filter, async (req, res) => {
+router.post('/:targetId', filter, async (req, res) => {
 
     try {
 
-        if (!req.body || !req.body.targetId) {
+        if (!req.params || !req.params.targetId) {
             throw new Error('NEED_TARGET_ID');
         }
         const me = await User.findById(req.user.id);
-        const target = await User.findById(req.body.targetId);
+        const target = await User.findById(req.params.targetId);
         if (!target) {
             throw new Error('TARGET_NOT_FOUND');
         }
@@ -27,20 +27,20 @@ router.post('/', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS' });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
 
-router.delete('/', filter, async (req, res) => {
+router.delete('/:targetId', filter, async (req, res) => {
 
     try {
 
-        if (!req.body || !req.body.targetId) {
+        if (!req.params || !req.params.targetId) {
             throw new Error('NEED_TARGET_ID');
         }
         const me = await User.findById(req.user.id);
-        const target = await User.findById(req.body.targetId);
+        const target = await User.findById(req.params.targetId);
         if (!target) {
             throw new Error('TARGET_NOT_FOUND');
         }
@@ -51,7 +51,7 @@ router.delete('/', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS' });
 
     } catch ({ message }) {
-        return res.send({ message });
+        return res.send(400, { message });
     }
 
 });
