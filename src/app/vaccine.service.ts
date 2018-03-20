@@ -165,7 +165,35 @@ export class PostService {
 @Injectable()
 export class CommentService {
 
-  constructor(http: HttpClient, cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
+
+  public create(comment: { content: string }): Promise<IComment> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.post<CommentRes>(`${API_URL}/comments`, comment, { headers }).toPromise()
+      .then(res => res.comment);
+  }
+
+  public readOne(id: string): Promise<IComment> {
+    return this.http.get<CommentRes>(`${API_URL}/comments/${id}`).toPromise()
+      .then(res => res.comment);
+  }
+
+  public read(params: { limit: string, offset: string, by?: string, q?: string }): Promise<IComment[]> {
+    return this.http.get<CommentsRes>(`${API_URL}/comments`, { params }).toPromise()
+      .then(res => res.comments);
+  }
+
+  public update(id: string, comment: { content?: string }): Promise<IComment> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.put<CommentRes>(`${API_URL}/comments/${id}`, comment, { headers }).toPromise()
+      .then(res => res.comment);
+  }
+
+  public delete(id: string): Promise<IComment> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.delete<CommentRes>(`${API_URL}/users/${id}`, { headers }).toPromise()
+      .then(res => res.comment);
+  }
 
 }
 
