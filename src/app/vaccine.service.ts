@@ -60,6 +60,10 @@ export class SignService {
     this.cookieService.delete('ene');
   }
 
+  public isLogin(): boolean {
+    return this.cookieService.check('ene');
+  }
+
 }
 
 @Injectable()

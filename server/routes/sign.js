@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
 
         const user = (await User.login(req.body.email, req.body.password))[0];
         if (!user) {
-            throw new Error('INVALID_EMAIL_OR_PASSWORD');
+            throw new Error('이메일 혹은 암호가 일치하지 않습니다.');
         }
         const token = sign({ id: user._id }, constants.JWT_SALT);
         return res.send({ message: 'SUCCESS', token: token });

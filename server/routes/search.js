@@ -17,7 +17,7 @@ router.get('/users', async (req, res) => {
             throw new Error('QUERY_Q_NOT_EXIST');
         }
         const users = await User
-            .find({ $or: [{ username: { $regex: RegExp(q, 'i') } }, { email: { $regex: RegExp(q, 'i') } }] }, { score: { $meta: 'textScore' } })
+            .find({ $or: [{ email: { $regex: RegExp(q, 'i') } }] }, { score: { $meta: 'textScore' } })
             .sort({ score: { $meta: 'textScore' } })
             .limit(Number(limit))
             .skip(Number(offset));

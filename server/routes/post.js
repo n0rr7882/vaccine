@@ -34,12 +34,12 @@ router.get('/:postId', async (req, res) => {
             .populate('comments')
             .populate('comments.author');
         if (!post) {
-            throw new Error('POST_NOT_FOUND');
+            throw new Error('포스트가 존재하지 않습니다.');
         }
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -74,10 +74,10 @@ router.put('/:postId', filter, async (req, res) => {
 
         const post = await Post.findById(req.params.postId);
         if (!post) {
-            throw new Error('POST_NOT_FOUND');
+            throw new Error('포스트가 존재하지 않습니다');
         }
         if (req.user.id.toString() !== post.author.toString()) {
-            throw new Error('PERMISSION_DENIED');
+            throw new Error('권한이 부족합니다.');
         }
         const data = checkProperty(req.body, 'post', false);
         if (data.message !== 'SUCCESS') {
@@ -100,10 +100,10 @@ router.delete('/:postId', filter, async (req, res) => {
 
         const post = await Post.findById(req.params.postId);
         if (!post) {
-            throw new Error('POST_NOT_FOUND');
+            throw new Error('포스트가 존재하지 않습니다.');
         }
         if (req.user.id.toString() !== post.author.toString()) {
-            throw new Error('PERMISSION_DENIED');
+            throw new Error('권한이 부족합니다.');
         }
         const result = await post.remove();
         return res.send({ message: 'SUCCESS', result });

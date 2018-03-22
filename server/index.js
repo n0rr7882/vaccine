@@ -29,7 +29,7 @@ app.use(auth);
 
 app.use('/api', routes);
 
-app.get('/*', function (req, res, next) {
+app.get('/*', (req, res) => {
     res.sendFile('index.html', { root: join(__dirname, '..', 'dist') });
 });
 

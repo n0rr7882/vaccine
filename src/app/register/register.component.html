@@ -9,20 +9,21 @@
   </div>
   <div class="register">
     <div class="signin">
-      <form action="post">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit" class="active">Login</button>
+      <form action="post" [formGroup]="this.loginForm">
+        <input type="email" name="email" placeholder="Email" formControlName="email">
+        <input type="password" name="password" placeholder="Password" formControlName="password">
+        <button type="submit" class="active">{{ this.ll ? 'Loading...' : 'Login' }}</button>
         <a href="/">Forget password?</a>
       </form>
     </div>
     <div class="signup">
-      <form action="post">
-        <input type="email" name="email" placeholder="Email">
-        <input type="text" name="username" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="password" placeholder="Again">
-        <button type="submit">Register</button>
+      <form class="post" [formGroup]="this.registerForm" (submit)="this.register()">
+        <input type="email" name="email" placeholder="Email" formControlName="email">
+        <input type="text" name="username" placeholder="Username" formControlName="username">
+        <input [type]="this.pv ? 'password' : 'text'" name="password" placeholder="Password" formControlName="password">
+        <a *ngIf="this.pv" (click)="this.changePwView()">See password</a>
+        <a *ngIf="!this.pv" (click)="this.changePwView()">Hide password</a>
+        <button type="submit">{{ this.rl ? 'Loading...' : 'Register' }}</button>
       </form>
     </div>
   </div>

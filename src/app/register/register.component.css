@@ -5,7 +5,7 @@
     z-index: -1;
     background-position: center;
     background-size: cover;
-    background-image: url(/assets/backgrounds/background.jpg);
+    background-image: url(/assets/backgrounds/background2.jpg);
 }
 
 main {
@@ -13,7 +13,7 @@ main {
     height: 100vh;
     display: flex;
     flex-direction: row;
-    background-color: rgba(0, 0, 0, 0.75)
+    background-color: rgba(0, 0, 0, 0.5)
 }
 
 .mainpage {
@@ -95,7 +95,7 @@ input {
     padding: 7px;
     width: 100%;
     font-size: small;
-    text-align: center;
+    text-align: start;
     margin: 5px 0;
 }
 
@@ -146,3 +146,14 @@ button.active:hover {
         padding: 50px 0;
     }
 }
+
+input.ng-invalid.ng-touched {
+    border:1px solid rgb(255, 97, 97);
+    box-shadow: 0 0 5px rgb(255, 97, 97);
+}
+
+input.ng-valid {
+    border: 1px solid rgb(12, 124, 83);
+    box-shadow: 0 0 5px rgb(12, 124, 83);
+}
+

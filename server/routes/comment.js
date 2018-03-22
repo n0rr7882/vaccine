@@ -12,7 +12,7 @@ router.post('/:postId', filter, async (req, res) => {
 
         const post = await Post.findById(req.params.postId);
         if (!post) {
-            throw new Error('POST_NOT_FOUND');
+            throw new Error('포스트가 존재하지 않습니다.');
         }
         const data = checkProperty(req.body, 'comment', true);
         if (data.message !== 'SUCCESS') {
@@ -36,7 +36,7 @@ router.get('/:commentId', async (req, res) => {
 
         const comment = await Comment.findById(req.params.commentId);
         if (!comment) {
-            throw new Error('COMMENT_NOT_FOUND');
+            throw new Error('존재하지 않는 댓글입니다.');
         }
         return res.send({ message: 'SUCCESS', comment });
 
@@ -76,10 +76,10 @@ router.put('/:commentId', filter, async (req, res) => {
 
         const comment = await Comment.findById(req.params.commentId);
         if (!comment) {
-            throw new Error('COMMENT_NOT_FOUND');
+            throw new Error('존재하지 않는 댓글입니다.');
         }
         if (req.user.id.toString() !== comment.author.toString()) {
-            throw new Error('PERMISSION_DENIED');
+            throw new Error('권한이 부족합니다.');
         }
         const { message, data: { content } } = checkProperty(req.body, 'comment', false);
         if (message !== 'SUCCESS') {
@@ -101,7 +101,7 @@ router.delete('/:commentId', filter, async (req, res) => {
 
         const comment = await Comment.findById(req.params.commentId);
         if (!comment) {
-            throw new Error('COMMENT_NOT_FOUND');
+            throw new Error('존재하지 않는 댓글입니다.');
         }
         const post = await Post.findById(comment.post);
         if (post) {

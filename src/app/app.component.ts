@@ -7,6 +7,6 @@ import { SignService } from './vaccine.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private signService: SignService) { }
+  constructor(public signService: SignService) { }
 
 }

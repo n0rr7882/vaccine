@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     try {
 
         if ((await User.findOne({ email: req.body.email }))) {
-            throw new Error('EMAIL_ALREADY_EXIST');
+            throw new Error('이미 등록 된 이메일입니다.');
         }
         const data = checkProperty(req.body, 'user', true);
         if (data.message !== 'SUCCESS') {
@@ -20,8 +20,9 @@ router.post('/', async (req, res) => {
         user.password = user.__v = undefined;
         return res.send({ message: 'SUCCESS', user });
 
-    } catch ({ message }) {
-        return res.send(400, { message });
+    } catch (err) {
+        console.error(err);
+        return res.send(400, { message: err.message });
     }
 
 });
@@ -34,7 +35,7 @@ router.get('/:userId', async (req, res) => {
             .populate('followers')
             .populate('followings');
         if (!user) {
-            throw new Error('USER_NOT_FOUND');
+            throw new Error('계정이 존재하지 않습니다.');
         }
         return res.send({ message: 'SUCCESS', user });
 
@@ -76,13 +77,13 @@ router.put('/:userId', filter, async (req, res) => {
 
         const user = await User.findById(req.params.userId);
         if (!user) {
-            throw new Error('USER_NOT_FOUND');
+            throw new Error('계정이 존재하지 않습니다.');
         }
         if (req.user.id.toString() !== user._id.toString()) {
-            throw new Error('PERMISSION_DENIED');
+            throw new Error('권한이 부족합니다.');
         }
         if (req.body.email && (await User.findOne({ email: req.body.email }))) {
-            throw new Error('EMAIL_ALREADY_EXIST');
+            throw new Error('이미 등록 된 이메일입니다.');
         }
         const data = checkProperty(req.body, 'user', false);
         if (data.message !== 'SUCCESS') {
@@ -106,9 +107,9 @@ router.delete('/:userId', filter, async (req, res) => {
     try {
 
         const user = await User.findById(req.params.userId);
-        if (!user) throw new Error('USER_NOT_FOUND');
+        if (!user) throw new Error('계정이 존재하지 않습니다.');
         if (req.user.id.toString() !== user._id.toString()) {
-            throw new Error('PERMISSION_DENIED');
+            throw new Error('권한이 부족합니다.');
         }
         const result = await user.remove();
         return res.send({ message: 'SUCCESS', result });

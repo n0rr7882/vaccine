@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
@@ -16,7 +19,15 @@ import { PostCardComponent } from './post-card/post-card.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { CommentsComponent } from './comments/comments.component';
 
-import { SignService } from './vaccine.service';
+import {
+  SignService,
+  UserService,
+  PostService,
+  CommentService,
+  FollowService,
+  MypageService
+} from './vaccine.service';
+
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -35,13 +46,22 @@ import { CookieService } from 'ngx-cookie-service';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     VaccineRoutingModule,
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     CookieService,
-    SignService
+    SignService,
+    UserService,
+    PostService,
+    CommentService,
+    FollowService,
+    MypageService
   ],
   bootstrap: [AppComponent]
 })
