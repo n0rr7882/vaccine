@@ -9,7 +9,7 @@
   </div>
   <div class="register">
     <div class="signin">
-      <form action="post" [formGroup]="this.loginForm">
+      <form action="post" [formGroup]="this.loginForm" (submit)="this.login()">
         <input type="email" name="email" placeholder="Email" formControlName="email">
         <input type="password" name="password" placeholder="Password" formControlName="password">
         <button type="submit" class="active">{{ this.ll ? 'Loading...' : 'Login' }}</button>

@@ -70,17 +70,17 @@ export class RegisterComponent {
         }
         throw new Error('폼을 모두 작성해주세요.');
       })
-      .then(user => {
+      .then(data => {
         this.registerLoading = true;
-        return this.userService.create(user);
+        return this.userService.create(data);
       })
       .then(user => {
         const { email, password } = this.registerForm.value;
         return this.signService.login({ email, password });
       })
       .then(() => {
-        this.registerLoading = false;
         this.toastrService.success(`${this.registerForm.value.username}님`, '회원가입 성공');
+        this.registerLoading = false;
       })
       .catch(err => {
         if (err.error) {
@@ -94,6 +94,30 @@ export class RegisterComponent {
   }
 
   public login(): void {
+
+    Promise.resolve()
+      .then(() => {
+        if (this.loginForm.valid) {
+          return this.loginForm.value;
+        }
+        throw new Error('올바른 Email과 암호를 입력해주세요.');
+      })
+      .then(data => {
+        this.loginLoading = true;
+        return this.signService.login(data);
+      })
+      .then(() => {
+        this.toastrService.success('로그인 성공');
+        this.loginLoading = false;
+      })
+      .catch(err => {
+        if (err.error) {
+          this.toastrService.error(err.error.message, '로그인 실패');
+        } else {
+          this.toastrService.error(err.message, '로그인 실패');
+        }
+        this.loginLoading = false;
+      });
 
   }
 
