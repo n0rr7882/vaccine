@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { IUser, IPost, IComment } from './vaccine.interface';
 
 export const API_URL = 'http://localhost:3000/api';
+export const POSTS_LIMIT = 10;
 
 interface Response {
   message: string;

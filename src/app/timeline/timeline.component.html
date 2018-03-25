@@ -1,5 +1,11 @@
 <section>
-  <div class="wrapper">
-    <app-post-card *ngFor="let post of [0,1,2,3,4,5]"></app-post-card>
+  <div class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
+    <div class="write">
+      <form action="post" [formGroup]="this.writeForm" (submit)="this.write()">
+        <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content"></textarea>
+        <button type="submit">{{ this.wl ? 'Loading..' : '올리기' }}</button>
+      </form>
+    </div>
+    <app-post-card *ngFor="let post of this.postsNowLoaded" [post]="post"></app-post-card>
   </div>
 </section>

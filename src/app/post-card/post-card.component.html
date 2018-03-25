@@ -3,29 +3,26 @@
     <img src="/assets/backgrounds/background.jpg" alt="">
   </div>
   <div class="card-contents">
-    <div class="card-contents-text">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Architecto ex earum molestiae ea tempora illo a, suscipit ullam
-      reprehenderit cumque nam facere assumenda voluptatem qui veritatis beatae quae? Doloremque, quaerat.
-    </div>
+    <div class="card-contents-text">{{ this.post.content }}</div>
     <hr>
     <div class="card-icons">
       <div class="card-button-wrapper">
         <div class="card-button-icon activated-like">
           <fa name="heart" size="lg"></fa>
         </div>
-        <span class="card-button-count">13</span>
+        <span class="card-button-count">{{ this.post.goods.length }}</span>
       </div>
       <div class="card-button-wrapper">
         <div class="card-button-icon">
           <fa name="comment" size="lg"></fa>
         </div>
-        <span class="card-button-count">13</span>
+        <span class="card-button-count">{{ this.post.comments.length }}</span>
       </div>
       <div class="card-button-wrapper user-info">
-        <a href="/" class="user-link">
+        <a [routerLink]="'/users/' + this.post.author._id" class="user-link">
           <div class="card-author-thumbnail"></div>
           <div class="card-author-info">
-            <div class="card-author-name">Myname Yourname</div>
+            <div class="card-author-name">{{ this.post.author?.username }}</div>
             <div class="card-author-email">test1234@email.com</div>
           </div>
         </a>

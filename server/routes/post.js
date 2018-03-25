@@ -15,11 +15,11 @@ router.post('/', filter, async (req, res) => {
         }
         data.data.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
         data.data.author = req.user.id;
-        const post = await Post.create(data.data);
+        const post = await Post.findById((await Post.create(data.data))._id).populate('author');
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 });
 
@@ -85,11 +85,11 @@ router.put('/:postId', filter, async (req, res) => {
         }
         post.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
         if (data.data.content) post.content = data.data.content;
-        const result = await post.save();
+        const result = Post.findById((await post.save())._id).populate('author');
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -109,7 +109,7 @@ router.delete('/:postId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
