@@ -6,6 +6,6 @@
         <button type="submit">{{ this.wl ? 'Loading..' : '올리기' }}</button>
       </form>
     </div>
-    <app-post-card *ngFor="let post of this.postsNowLoaded" [post]="post"></app-post-card>
+    <app-post-card *ngFor="let post of this.posts" [post]="post"></app-post-card>
   </div>
 </section>

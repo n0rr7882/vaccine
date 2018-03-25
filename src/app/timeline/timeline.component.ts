@@ -15,7 +15,7 @@ export class TimelineComponent implements OnInit {
   private postLoading: boolean;
   private postsOffset: number;
 
-  public postsNowLoaded: IPost[];
+  public posts: IPost[];
 
   writeForm: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -25,14 +25,13 @@ export class TimelineComponent implements OnInit {
     public postService: PostService,
     public mypageService: MypageService,
     private toastrService: ToastrService
-  ) {
+  ) { }
+
+  ngOnInit() {
     this.writeLoading = false;
     this.postLoading = false;
     this.postsOffset = 0;
-    this.postsNowLoaded = [];
-  }
-
-  ngOnInit() {
+    this.posts = [];
     this.readMorePosts();
   }
 
@@ -56,7 +55,7 @@ export class TimelineComponent implements OnInit {
         return this.postService.create(data);
       })
       .then(post => {
-        this.postsNowLoaded.unshift(post);
+        this.posts.unshift(post);
         this.writeForm.setValue({ content: '' });
         this.toastrService.success('업로드 성공');
         this.writeLoading = false;
@@ -81,7 +80,7 @@ export class TimelineComponent implements OnInit {
         return this.mypageService.getFollowingsPosts(params);
       })
       .then(posts => {
-        this.postsNowLoaded.push(...posts);
+        this.posts.push(...posts);
         return this.postLoading = false;
       })
       .catch(err => {

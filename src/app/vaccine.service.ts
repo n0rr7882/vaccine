@@ -5,6 +5,7 @@ import { IUser, IPost, IComment } from './vaccine.interface';
 
 export const API_URL = 'http://localhost:3000/api';
 export const POSTS_LIMIT = 10;
+export const COMMENTS_LIMIT = 20;
 
 interface Response {
   message: string;
@@ -172,9 +173,9 @@ export class CommentService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
-  public create(comment: { content: string }): Promise<IComment> {
+  public create(postId: string, comment: { content: string }): Promise<IComment> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
-    return this.http.post<CommentRes>(`${API_URL}/comments`, comment, { headers }).toPromise()
+    return this.http.post<CommentRes>(`${API_URL}/comments/${postId}`, comment, { headers }).toPromise()
       .then(res => res.comment);
   }
 
@@ -183,7 +184,7 @@ export class CommentService {
       .then(res => res.comment);
   }
 
-  public read(params: { limit: string, offset: string, by?: string, q?: string }): Promise<IComment[]> {
+  public read(params: { limit: string, offset: string, by: string, q: string, regex: string }): Promise<IComment[]> {
     return this.http.get<CommentsRes>(`${API_URL}/comments`, { params }).toPromise()
       .then(res => res.comments);
   }

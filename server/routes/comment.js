@@ -18,7 +18,7 @@ router.post('/:postId', filter, async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        const comment = await Comment.create({ post: post._id, author: req.user.id, content: data.data.content });
+        const comment = await Comment.findById((await Comment.create({ post: post._id, author: req.user.id, content: data.data.content }))._id).populate('author');
         post.comments.push(comment._id);
         post.save();
         comment.__v = undefined;
@@ -34,7 +34,7 @@ router.get('/:commentId', async (req, res) => {
 
     try {
 
-        const comment = await Comment.findById(req.params.commentId);
+        const comment = await Comment.findById(req.params.commentId).populate('author');
         if (!comment) {
             throw new Error('존재하지 않는 댓글입니다.');
         }
@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
 
     try {
 
-        const { limit, offset, by, q } = req.query;
+        const { limit, offset, by, q, regex } = req.query;
         if (!(limit && offset)) {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
@@ -58,10 +58,11 @@ router.get('/', async (req, res) => {
             throw new Error('BY_OR_Q_NOT_EXIST');
         }
         const comments = await Comment.find()
-            .where(by, RegExp(q))
+            .where(by, regex === 'true' ? RegExp(q) : q)
             .skip(Number(offset))
             .limit(Number(limit))
-            .sort('createdAt');
+            .populate('author')
+            .sort('-createdAt');
         return res.send({ message: 'SUCCESS', comments });
 
     } catch ({ message }) {

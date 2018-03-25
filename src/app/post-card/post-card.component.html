@@ -12,7 +12,7 @@
         </div>
         <span class="card-button-count">{{ this.post.goods.length }}</span>
       </div>
-      <div class="card-button-wrapper">
+      <div class="card-button-wrapper" (click)="this.toggleComments()">
         <div class="card-button-icon">
           <fa name="comment" size="lg"></fa>
         </div>
@@ -23,7 +23,7 @@
           <div class="card-author-thumbnail"></div>
           <div class="card-author-info">
             <div class="card-author-name">{{ this.post.author?.username }}</div>
-            <div class="card-author-email">test1234@email.com</div>
+            <div class="card-author-email">{{ this.post.author?.email }}</div>
           </div>
         </a>
       </div>
@@ -31,7 +31,7 @@
         <fa name="trash" size="lg"></fa>
       </div>
     </div>
-    <hr>
-    <app-comments></app-comments>
+    <hr *ngIf="this.ico">
+    <app-comments *ngIf="this.ico" [postId]="this.post._id"></app-comments>
   </div>
 </div>
