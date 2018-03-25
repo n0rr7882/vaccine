@@ -4,8 +4,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { IUser, IPost, IComment } from './vaccine.interface';
 
 export const API_URL = 'http://localhost:3000/api';
-export const POSTS_LIMIT = 10;
-export const COMMENTS_LIMIT = 20;
+export const POSTS_LIMIT = 5;
+export const COMMENTS_LIMIT = 5;
 
 interface Response {
   message: string;
@@ -64,6 +64,10 @@ export class SignService {
 
   public isLogin(): boolean {
     return this.cookieService.check('ene');
+  }
+
+  public getUserId(): string {
+    return this.cookieService.get('ene');
   }
 
 }

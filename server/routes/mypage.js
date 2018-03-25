@@ -17,7 +17,7 @@ router.get('/followings-posts', filter, async (req, res) => {
         const me = await User.findById(req.user.id);
         const posts = await Post.find()
             .where('author')
-            .in([req.user.id.toString(), ...me.followers.map(item => item.toString())])
+            .in([req.user.id.toString(), ...me.followings.map(item => item.toString())])
             .populate('author')
             .skip(Number(offset))
             .limit(Number(limit))

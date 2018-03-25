@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PostService } from '../vaccine.service';
+import { MypageService, PostService } from '../vaccine.service';
 import { IPost, IUser } from '../vaccine.interface';
 
 @Component({
@@ -11,21 +11,35 @@ export class PostCardComponent implements OnInit {
 
   @Input() post: IPost;
   private isCommentOpen: boolean;
+  public isCommented: boolean;
+  public isLiked: boolean;
 
-  constructor() { }
+  constructor(
+    private mypageService: MypageService,
+    private postService: PostService
+  ) { }
 
   ngOnInit() {
     this.isCommentOpen = false;
+    this.getMyActions();
   }
 
-  public get ico() { return this.isCommentOpen; }
+  public get ico(): boolean { return this.isCommentOpen; }
   public set ico(state: boolean) { this.isCommentOpen = state; }
 
   public toggleComments() {
     this.isCommentOpen = !this.isCommentOpen;
   }
 
-  public reloadCommentCount() {
+  public getMyActions() {
+    this.mypageService.getMe()
+      .then(user => {
+        console.log(user);
+        console.log(this.post.comments);
+      });
+  }
+
+  public reloadPost() {
 
   }
 

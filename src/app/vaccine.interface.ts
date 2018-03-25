@@ -13,8 +13,8 @@ export interface IPost {
     content: string;
     hashtags: string[];
     author: string | IUser;
-    comments: string[] | IComment[];
-    goods: string[] | IUser[];
+    comments: string[];
+    goods: string[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -24,7 +24,7 @@ export interface IComment {
     post: string | IPost;
     author: string | IUser;
     content: string;
-    goods: string[] | IUser[];
+    goods: string[];
     createdAt: Date;
     updatedAt: Date;
 }

@@ -77,3 +77,20 @@ a {
 .comment-delete:hover {
     color: rgb(255, 97, 97);
 }
+
+.more-button {
+    margin: 0 10px 10px 10px;
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+    color: rgb(21,152,103);
+}
+
+.more-button:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}

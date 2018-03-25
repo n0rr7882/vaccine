@@ -87,7 +87,8 @@ export class CommentsComponent implements OnInit {
       })
       .then(comments => {
         this.comments.push(...comments);
-        return this.commentLoading = false;
+        this.commentLoading = false;
+        this.commentsOffset += COMMENTS_LIMIT;
       })
       .catch(err => {
         if (err.error) {

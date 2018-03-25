@@ -81,7 +81,8 @@ export class TimelineComponent implements OnInit {
       })
       .then(posts => {
         this.posts.push(...posts);
-        return this.postLoading = false;
+        this.postLoading = false;
+        this.postsOffset += POSTS_LIMIT;
       })
       .catch(err => {
         if (err.error) {

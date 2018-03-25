@@ -1,19 +1,19 @@
 <div class="card">
-  <div class="card-thumbnail">
+  <!-- <div class="card-thumbnail">
     <img src="/assets/backgrounds/background.jpg" alt="">
-  </div>
+  </div> -->
   <div class="card-contents">
     <div class="card-contents-text">{{ this.post.content }}</div>
     <hr>
     <div class="card-icons">
       <div class="card-button-wrapper">
-        <div class="card-button-icon activated-like">
+        <div class="card-button-icon" [ngClass]="this.isLiked ? 'activated-like' : undefined">
           <fa name="heart" size="lg"></fa>
         </div>
         <span class="card-button-count">{{ this.post.goods.length }}</span>
       </div>
       <div class="card-button-wrapper" (click)="this.toggleComments()">
-        <div class="card-button-icon">
+        <div class="card-button-icon" [ngClass]="this.isCommented ? 'activated-like' : undefined">
           <fa name="comment" size="lg"></fa>
         </div>
         <span class="card-button-count">{{ this.post.comments.length }}</span>
