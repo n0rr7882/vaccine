@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { IUser, IPost, IComment } from './vaccine.interface';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 export const API_URL = 'http://localhost:3000/api';
 export const POSTS_LIMIT = 5;
@@ -14,6 +15,7 @@ interface Response {
 interface TokenRes {
   message: string;
   token: string;
+  user: IUser;
 }
 
 interface UserRes {
@@ -49,13 +51,24 @@ interface CommentsRes {
 @Injectable()
 export class SignService {
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  public me: IUser;
+
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    if (cookieService.check('ene')) {
+      this.getMe()
+        .then(user => { this.me = user; })
+        .catch(console.error);
+    }
+  }
 
   public login(sign: { email: string, password: string }): Promise<void> {
     return this.http.post<TokenRes>(`${API_URL}/sign`, sign).toPromise()
       .then(res => {
         this.cookieService.set('ene', res.token);
-      });
+        return this.getMe();
+      })
+      .then(user => { this.me = user; })
+      .catch(console.error);
   }
 
   public logout(): void {
@@ -66,8 +79,10 @@ export class SignService {
     return this.cookieService.check('ene');
   }
 
-  public getUserId(): string {
-    return this.cookieService.get('ene');
+  public getMe(): Promise<IUser> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.get<UserRes>(`${API_URL}/sign/me`, { headers }).toPromise()
+      .then(res => res.user);
   }
 
 }
@@ -221,6 +236,25 @@ export class FollowService {
   public unfollow(targetId: string): Promise<void> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.delete<Response>(`${API_URL}/follows/${targetId}`, { headers }).toPromise()
+      .then(() => { });
+  }
+
+}
+
+@Injectable()
+export class LikeService {
+
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
+
+  public like(postId: string): Promise<void> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.post<Response>(`${API_URL}/likes/${postId}`, {}, { headers }).toPromise()
+      .then(() => { });
+  }
+
+  public unlike(postId: string): Promise<void> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.delete<Response>(`${API_URL}/likes/${postId}`, { headers }).toPromise()
       .then(() => { });
   }
 

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { COMMENTS_LIMIT, CommentService } from '../vaccine.service';
-import { IPost, IComment } from '../vaccine.interface';
+import { COMMENTS_LIMIT, CommentService, MypageService } from '../vaccine.service';
+import { IPost, IComment, IUser } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -12,11 +12,13 @@ import { ToastrService } from 'ngx-toastr';
 export class CommentsComponent implements OnInit {
 
   @Input() postId: string;
+  @Output() reload = new EventEmitter<void>();
 
   private writeLoading: boolean;
   private commentLoading: boolean;
   private commentsOffset: number;
-  public comments: IComment[];
+  public comments: IComment[] = [];
+  public me: IUser;
 
   writeForm: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
@@ -24,6 +26,7 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     public commentService: CommentService,
+    public mypageService: MypageService,
     private toastrService: ToastrService
   ) { }
 
@@ -34,11 +37,28 @@ export class CommentsComponent implements OnInit {
   public set cl(state: boolean) { this.commentLoading = state; }
 
   ngOnInit() {
-    this.writeLoading = false;
-    this.commentLoading = false;
-    this.commentsOffset = 0;
-    this.comments = [];
-    this.readMoreComments();
+
+    Promise.resolve()
+      .then(() => {
+        this.writeLoading = false;
+        this.commentLoading = false;
+        this.commentsOffset = 0;
+        this.comments = [];
+        return this.mypageService.getMe();
+      })
+      .then(user => {
+        this.me = user;
+        this.readMoreComments();
+      })
+      .catch(err => {
+        if (err.error) {
+          this.toastrService.error(err.error.message, '알 수 없는 오류');
+        } else {
+          this.toastrService.error(err.message, '알 수 없는 오류');
+        }
+        this.writeLoading = false;
+      });
+
   }
 
   write() {
@@ -59,6 +79,7 @@ export class CommentsComponent implements OnInit {
         this.writeForm.setValue({ content: '' });
         this.toastrService.success('코멘트 등록 성공');
         this.writeLoading = false;
+        this.reload.emit();
       })
       .catch(err => {
         if (err.error) {
@@ -99,6 +120,16 @@ export class CommentsComponent implements OnInit {
         this.commentLoading = false;
       });
 
+  }
+
+  getCommentState(comment: IComment): string {
+    if (comment.author._id === this.me._id) {
+      return 'me-thumbnail-border';
+    } else if (this.me.followings.includes(comment.author._id)) {
+      return 'user-thumbnail-border';
+    } else {
+      return undefined;
+    }
   }
 
 }

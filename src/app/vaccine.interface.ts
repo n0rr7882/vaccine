@@ -2,8 +2,8 @@ export interface IUser {
     _id: string;
     username: string;
     email: string;
-    followers: string[] | IUser[];
-    followings: string[] | IUser[];
+    followers: string[];
+    followings: string[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -12,7 +12,7 @@ export interface IPost {
     _id: string;
     content: string;
     hashtags: string[];
-    author: string | IUser;
+    author: IUser;
     comments: string[];
     goods: string[];
     createdAt: Date;
@@ -22,7 +22,7 @@ export interface IPost {
 export interface IComment {
     _id: string;
     post: string | IPost;
-    author: string | IUser;
+    author: IUser;
     content: string;
     goods: string[];
     createdAt: Date;

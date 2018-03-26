@@ -26,7 +26,8 @@ import {
   PostService,
   CommentService,
   FollowService,
-  MypageService
+  MypageService,
+  LikeService
 } from './vaccine.service';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -63,7 +64,8 @@ import { CookieService } from 'ngx-cookie-service';
     PostService,
     CommentService,
     FollowService,
-    MypageService
+    MypageService,
+    LikeService
   ],
   bootstrap: [AppComponent]
 })

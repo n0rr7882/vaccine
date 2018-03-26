@@ -7,13 +7,16 @@
     <hr>
     <div class="card-icons">
       <div class="card-button-wrapper">
-        <div class="card-button-icon" [ngClass]="this.isLiked ? 'activated-like' : undefined">
+        <div class="card-button-icon activated-like" *ngIf="this.getMyActions()" (click)="this.unlike()">
+          <fa name="heart" size="lg"></fa>
+        </div>
+        <div class="card-button-icon" *ngIf="!this.getMyActions()" (click)="this.like()">
           <fa name="heart" size="lg"></fa>
         </div>
         <span class="card-button-count">{{ this.post.goods.length }}</span>
       </div>
       <div class="card-button-wrapper" (click)="this.toggleComments()">
-        <div class="card-button-icon" [ngClass]="this.isCommented ? 'activated-like' : undefined">
+        <div class="card-button-icon" [ngClass]="this.ico ? 'activated-comment' : undefined">
           <fa name="comment" size="lg"></fa>
         </div>
         <span class="card-button-count">{{ this.post.comments.length }}</span>
@@ -22,8 +25,8 @@
         <a [routerLink]="'/users/' + this.post.author._id" class="user-link">
           <div class="card-author-thumbnail"></div>
           <div class="card-author-info">
-            <div class="card-author-name">{{ this.post.author?.username }}</div>
-            <div class="card-author-email">{{ this.post.author?.email }}</div>
+            <div class="card-author-name">{{ this.post.author.username }}</div>
+            <div class="card-author-email">{{ this.post.author.email }}</div>
           </div>
         </a>
       </div>
@@ -32,6 +35,6 @@
       </div>
     </div>
     <hr *ngIf="this.ico">
-    <app-comments *ngIf="this.ico" [postId]="this.post._id"></app-comments>
+    <app-comments *ngIf="this.ico" [postId]="this.post._id" (reload)="this.reloadPost()"></app-comments>
   </div>
 </div>

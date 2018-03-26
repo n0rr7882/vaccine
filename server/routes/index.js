@@ -9,6 +9,7 @@ import follow from './follow';
 import upload from './upload';
 import mypage from './mypage';
 import search from './search';
+import like from './like';
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ router.use('/follows', follow);
 router.use('/uploads', upload);
 router.use('/mypages', mypage);
 router.use('/search', search);
+router.use('/likes', like);
 router.use(error);
 
 export default router;

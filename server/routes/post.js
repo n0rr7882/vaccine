@@ -30,9 +30,7 @@ router.get('/:postId', async (req, res) => {
     try {
 
         const post = await Post.findById(req.params.postId)
-            .populate('author')
-            .populate('comments')
-            .populate('comments.author');
+            .populate('author');
         if (!post) {
             throw new Error('포스트가 존재하지 않습니다.');
         }

@@ -91,7 +91,7 @@ router.put('/:commentId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -113,7 +113,7 @@ router.delete('/:commentId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });

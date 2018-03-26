@@ -92,10 +92,7 @@ router.get('/me', filter, async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.user.id)
-            .populate('followers')
-            .populate('followings')
-            .sort('-createdAt');
+        const user = await User.findById(req.user.id);
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
