@@ -35,6 +35,6 @@
       </div>
     </div>
     <hr *ngIf="this.ico">
-    <app-comments *ngIf="this.ico" [postId]="this.post._id" (reload)="this.reloadPost()"></app-comments>
+    <app-comments *ngIf="this.ico" [post]="this.post" (reload)="this.reloadPost()"></app-comments>
   </div>
 </div>

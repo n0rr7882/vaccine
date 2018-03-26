@@ -11,7 +11,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CommentsComponent implements OnInit {
 
-  @Input() postId: string;
+  @Input() post: IPost;
   @Output() reload = new EventEmitter<void>();
 
   private writeLoading: boolean;
@@ -72,7 +72,7 @@ export class CommentsComponent implements OnInit {
       })
       .then(data => {
         this.writeLoading = true;
-        return this.commentService.create(this.postId, data);
+        return this.commentService.create(this.post._id, data);
       })
       .then(comment => {
         this.comments.unshift(comment);
@@ -92,6 +92,24 @@ export class CommentsComponent implements OnInit {
 
   }
 
+  deleteComment(comment: IComment) {
+
+    this.commentService.delete(comment._id)
+      .then(() => {
+        this.reload.emit();
+        this.comments = this.comments.filter(i => i._id !== comment._id);
+        this.commentsOffset -= 1;
+      })
+      .catch(err => {
+        if (err.error) {
+          this.toastrService.error(err.error.message, '코멘트 삭제 실패');
+        } else {
+          this.toastrService.error(err.message, '코멘트 삭제 실패');
+        }
+      });
+
+  }
+
   readMoreComments() {
 
     Promise.resolve()
@@ -101,7 +119,7 @@ export class CommentsComponent implements OnInit {
           limit: COMMENTS_LIMIT.toString(),
           offset: this.commentsOffset.toString(),
           by: 'post',
-          q: this.postId,
+          q: this.post._id,
           regex: 'false'
         };
         return this.commentService.read(params);
@@ -129,6 +147,14 @@ export class CommentsComponent implements OnInit {
       return 'user-thumbnail-border';
     } else {
       return undefined;
+    }
+  }
+
+  canIDelete(comment: IComment): boolean {
+    if (comment.author._id === this.me._id || this.post.author._id === this.me._id) {
+      return true;
+    } else {
+      return false;
     }
   }
 

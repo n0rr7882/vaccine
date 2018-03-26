@@ -20,7 +20,7 @@ router.post('/:postId', filter, async (req, res) => {
         }
         const comment = await Comment.findById((await Comment.create({ post: post._id, author: req.user.id, content: data.data.content }))._id).populate('author');
         post.comments.push(comment._id);
-        post.save();
+        await post.save();
         comment.__v = undefined;
         return res.send({ message: 'SUCCESS', comment });
 
@@ -107,9 +107,9 @@ router.delete('/:commentId', filter, async (req, res) => {
         const post = await Post.findById(comment.post);
         if (post) {
             post.comments.pull(comment._id);
-            post.save();
+            await post.save();
         }
-        const result = await comment.destroy();
+        const result = await comment.remove();
         return res.send({ message: 'SUCCESS', result });
 
     } catch ({ message }) {

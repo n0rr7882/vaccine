@@ -31,6 +31,7 @@ export class PostCardComponent implements OnInit {
 
   public toggleComments() {
     this.isCommentOpen = !this.isCommentOpen;
+    this.reloadPost();
   }
 
   public getMyActions() {

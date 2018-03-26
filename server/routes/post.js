@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Post from '../database/models/Post';
+import Comment from '../database/models/Comment';
 import { filter } from '../tools/authentication';
 import { checkProperty } from '../tools/validator';
 
@@ -103,6 +104,7 @@ router.delete('/:postId', filter, async (req, res) => {
         if (req.user.id.toString() !== post.author.toString()) {
             throw new Error('권한이 부족합니다.');
         }
+        await Comment.remove({ post: post.author });
         const result = await post.remove();
         return res.send({ message: 'SUCCESS', result });
 

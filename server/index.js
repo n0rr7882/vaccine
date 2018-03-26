@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/resources', express.static(join(__dirname, 'resources')));
 app.use(express.static(join(__dirname, '..', 'dist')));
 app.use(fileUpload());
-// app.use(cors());
+app.use(cors());
 
 app.use(auth);
 

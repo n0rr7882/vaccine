@@ -216,7 +216,7 @@ export class CommentService {
 
   public delete(id: string): Promise<IComment> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
-    return this.http.delete<CommentRes>(`${API_URL}/users/${id}`, { headers }).toPromise()
+    return this.http.delete<CommentRes>(`${API_URL}/comments/${id}`, { headers }).toPromise()
       .then(res => res.comment);
   }
 
