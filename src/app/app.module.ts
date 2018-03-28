@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { FollowsComponent } from './follows/follows.component';
 import { SearchComponent } from './search/search.component';
-import { MypageComponent } from './mypage/mypage.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 import { VaccineRoutingModule } from './vaccine-routing.module';
 import { NavComponent } from './nav/nav.component';
@@ -39,7 +39,7 @@ import { CookieService } from 'ngx-cookie-service';
     TimelineComponent,
     FollowsComponent,
     SearchComponent,
-    MypageComponent,
+    UserInfoComponent,
     NavComponent,
     RegisterComponent,
     PostCardComponent,

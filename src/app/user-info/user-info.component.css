@@ -1,0 +1,136 @@
+section {
+    width: 100%;
+    min-height: 100%;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.profile-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: calc(100% - 20px);
+    background: #ffffff;
+    margin: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+.profile-info {
+    margin: 30px 30px 30px 0;
+}
+
+.thumbnail-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.divider {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+
+.thumbnail {
+    width: 200px;
+    height: 200px;
+    background-color: #abcdef;
+    background-position: center;
+    border-radius: 50%;
+    background-size: cover;
+    margin: 0 auto;
+}
+
+.thumbnail.following {
+    border: 8px solid rgb(42, 91, 180);
+}
+
+.thumbnail.me {
+    border: 8px solid rgb(21,152,103);
+}
+
+.info span, .edit span {
+    font-size: large;
+    color: gray;
+    margin: 0;
+}
+
+.info h2 {
+    font-size: x-large;
+    color: #0f0f0f;
+    margin-top: 0;
+}
+
+.info h3 {
+    font-size: larger;
+    color: #0f0f0f;
+    margin-top: 0;
+}
+
+.edit {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit>input {
+    transition: width 0.3s;
+    outline: none;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 7px;
+    width: 100%;
+    font-size: large;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+
+.edit>input:focus {
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+}
+
+.button {
+    width: 100%;
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+    color: rgb(21,152,103);
+    margin-top: 10px;
+}
+
+.button:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}
+
+.button.red {
+    border: 1px solid rgb(255, 97, 97);
+    color: rgb(255, 97, 97);
+}
+
+.button.red:hover {
+    background: rgb(255, 97, 97);
+    color: #ffffff;
+}
+
+@media screen and (max-width: 512px) {
+    .profile-wrapper {
+        flex-direction: column;
+        padding: 30px;
+    }
+    .profile-info {
+        margin: 0 auto;
+        padding-top: 30px;
+        width: 100%;
+        max-width: 300px;
+    }
+}

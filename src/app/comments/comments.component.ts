@@ -98,7 +98,9 @@ export class CommentsComponent implements OnInit {
       .then(() => {
         this.reload.emit();
         this.comments = this.comments.filter(i => i._id !== comment._id);
-        this.commentsOffset -= 1;
+        if (this.commentsOffset >= 0) {
+          this.commentsOffset -= 1;
+        }
       })
       .catch(err => {
         if (err.error) {

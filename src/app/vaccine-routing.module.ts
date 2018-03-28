@@ -5,13 +5,13 @@ import { AppComponent } from './app.component';
 import { TimelineComponent } from './timeline/timeline.component';
 import { FollowsComponent } from './follows/follows.component';
 import { SearchComponent } from './search/search.component';
-import { MypageComponent } from './mypage/mypage.component';
+import { UserInfoComponent } from './user-info/user-info.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'timeline', pathMatch: 'full' },
-    { path: 'timeline', component: TimelineComponent },
-    { path: 'follows', component: FollowsComponent },
-    { path: 'mypage', component: MypageComponent }
+    { path: '', redirectTo: 't', pathMatch: 'full' },
+    { path: 't', component: TimelineComponent },
+    { path: 'f', component: FollowsComponent },
+    { path: 'u/:id', component: UserInfoComponent }
 ];
 
 @NgModule({
