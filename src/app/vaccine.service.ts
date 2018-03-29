@@ -80,7 +80,7 @@ export class SignService {
   public loadMe(): Promise<void> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.get<UserRes>(`${API_URL}/sign/me`, { headers }).toPromise()
-      .then(res => { this.me = res.user; });
+      .then(res => { this.me = res.user; }).catch(console.error);
   }
 
 }

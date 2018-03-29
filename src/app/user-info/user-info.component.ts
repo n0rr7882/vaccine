@@ -15,8 +15,6 @@ export class UserInfoComponent implements OnInit {
   isEdit: boolean;
   posts: IPost[];
   user: IUser;
-  userLoading: boolean;
-  postLoading: boolean;
   postsOffset: number;
 
   updateForm: FormGroup = new FormGroup({
@@ -32,32 +30,50 @@ export class UserInfoComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.signService.loadMe()
-      .then(() => {
-        this.isEdit = false;
-        this.postLoading = false;
-        this.postsOffset = 0;
-        this.posts = [];
-        this.user = null;
-        this.loadUser();
-        this.readMorePosts();
-      });
+  async ngOnInit() {
+
+    this.isEdit = false;
+    this.postsOffset = 0;
+    this.posts = [];
+    this.user = null;
+
+    try {
+
+      await this.signService.loadMe();
+      await this.loadUser();
+      await this.readMorePosts();
+
+    } catch (err) {
+      if (err.error) {
+        this.toastrService.error(err.error.message, 'ERROR');
+      } else {
+        this.toastrService.error(err.message, 'ERROR');
+      }
+    }
+
   }
 
   public toggleEdit() {
     this.isEdit = !this.isEdit;
   }
 
-  public loadUser() {
+  public async loadUser(): Promise<void> {
+    this.user = await this.userService.readOne(this.route.snapshot.params['id']);
+  }
 
+  public async readMorePosts(): Promise<void> {
+    const posts = await this.postService.read({
+      limit: POSTS_LIMIT.toString(),
+      offset: this.postsOffset.toString(),
+      by: 'author',
+      q: this.route.snapshot.params['id'],
+      regex: 'false'
+    });
+    this.posts.push(...posts);
+    this.postsOffset += POSTS_LIMIT;
   }
 
   public update(): void {
-
-  }
-
-  public readMorePosts(): void {
 
   }
 
