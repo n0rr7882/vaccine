@@ -1,34 +1,28 @@
 <section>
-  <div class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
+  <div *ngIf="this.user" class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
     <div class="profile-wrapper">
       <div class="divider thumbnail-wrapper">
         <div class="thumbnail me"></div>
       </div>
       <div class="divider profile-info">
-        <div *ngIf="!this.ie" class="info">
+        <div *ngIf="!this.isEdit" class="info">
           <span>username</span>
-          <h2>유동호</h2>
+          <h2>{{ this.user.username }}</h2>
           <span>email</span>
-          <h3>n0rr7882@gmail.com</h3>
+          <h3>{{ this.user.email }}</h3>
           <button class="button" (click)="this.toggleEdit()">프로필 수정</button>
           <button class="button red">로그아웃</button>
         </div>
-        <form *ngIf="this.ie" class="edit">
+        <form *ngIf="this.isEdit" class="edit" [formGroup]="this.updateForm" (submit)="this.update()">
           <span>username</span>
-          <input type="text" placeholder="유동호" value="유동호">
+          <input type="text" [placeholder]="this.user.username" [value]="this.user.username" formControlName="username">
           <span>email</span>
-          <input type="email" placeholder="n0rr7882@gmail.com" value="n0rr7882@gmail.com">
+          <input type="email" [placeholder]="this.user.email" [value]="this.user.email" formControlName="email">
           <button class="button red" (click)="this.toggleEdit()">수정 취소</button>
-          <button class="button">업데이트</button>
+          <button type="submit" class="button">업데이트</button>
         </form>
       </div>
     </div>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
-    <app-post-card></app-post-card>
+    <app-post-card *ngFor="let post of this.posts" [post]="post"></app-post-card>
   </div>
 </section>

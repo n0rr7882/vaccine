@@ -53,13 +53,7 @@ export class SignService {
 
   public me: IUser;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {
-    if (cookieService.check('ene')) {
-      this.getMe()
-        .then(user => { this.me = user; })
-        .catch(console.error);
-    }
-  }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   public login(sign: { email: string, password: string }): Promise<void> {
     return this.http.post<TokenRes>(`${API_URL}/sign`, sign).toPromise()
@@ -80,9 +74,13 @@ export class SignService {
   }
 
   public getMe(): Promise<IUser> {
+    return Promise.resolve(this.me);
+  }
+
+  public loadMe(): Promise<void> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.get<UserRes>(`${API_URL}/sign/me`, { headers }).toPromise()
-      .then(res => res.user);
+      .then(res => { this.me = res.user; });
   }
 
 }
@@ -168,8 +166,8 @@ export class PostService {
       .then(res => res.post);
   }
 
-  public read(params: { limit: string, offset: string, by?: string, q?: string }): Promise<IPost[]> {
-    return this.http.get<PostsRes>(`${API_URL}/users`, { params }).toPromise()
+  public read(params: { limit: string, offset: string, by: string, q: string, regex: string }): Promise<IPost[]> {
+    return this.http.get<PostsRes>(`${API_URL}/posts`, { params }).toPromise()
       .then(res => res.posts);
   }
 
@@ -181,7 +179,7 @@ export class PostService {
 
   public delete(id: string): Promise<IPost> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
-    return this.http.delete<PostRes>(`${API_URL}/users/${id}`, { headers }).toPromise()
+    return this.http.delete<PostRes>(`${API_URL}/posts/${id}`, { headers }).toPromise()
       .then(res => res.post);
   }
 

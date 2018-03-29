@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { POSTS_LIMIT, PostService, MypageService } from '../vaccine.service';
+import { POSTS_LIMIT, PostService, MypageService, SignService } from '../vaccine.service';
 import { IPost } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,17 +22,21 @@ export class TimelineComponent implements OnInit {
   });
 
   constructor(
+    public signService: SignService,
     public postService: PostService,
     public mypageService: MypageService,
     private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
-    this.writeLoading = false;
-    this.postLoading = false;
-    this.postsOffset = 0;
-    this.posts = [];
-    this.readMorePosts();
+    this.signService.loadMe()
+      .then(() => {
+        this.writeLoading = false;
+        this.postLoading = false;
+        this.postsOffset = 0;
+        this.posts = [];
+        this.readMorePosts();
+      });
   }
 
   public get wl(): boolean { return this.writeLoading; }

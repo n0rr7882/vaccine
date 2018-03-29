@@ -11,7 +11,8 @@ const routes: Routes = [
     { path: '', redirectTo: 't', pathMatch: 'full' },
     { path: 't', component: TimelineComponent },
     { path: 'f', component: FollowsComponent },
-    { path: 'u/:id', component: UserInfoComponent }
+    { path: 'u/:id', component: UserInfoComponent },
+    { path: '**', redirectTo: 't' }
 ];
 
 @NgModule({

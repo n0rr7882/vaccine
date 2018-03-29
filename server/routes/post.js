@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
 
     try {
 
-        const { limit, offset, by, q } = req.query;
+        const { limit, offset, by, q, regex } = req.query;
         if (!(limit && offset)) {
             throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
         }
@@ -55,7 +55,7 @@ router.get('/', async (req, res) => {
             throw new Error('BY_OR_Q_NOT_EXIST');
         }
         const posts = await Post.find()
-            .where(by, RegExp(q))
+            .where(by, regex === 'true' ? RegExp(q) : q)
             .populate('author')
             .skip(Number(offset))
             .limit(Number(limit))
