@@ -2,7 +2,8 @@
   <div *ngIf="this.user" class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
     <div class="profile-wrapper">
       <div class="divider thumbnail-wrapper">
-        <div class="thumbnail me"></div>
+        <div *ngIf="this.me._id === this.user._id" class="thumbnail me"></div>
+        <div *ngIf="this.me._id !== this.user._id" class="thumbnail" [ngClass]="this.user.followers.includes(this.me._id.toString()) ? 'following': null"></div>
       </div>
       <div class="divider profile-info">
         <div *ngIf="!this.isEdit" class="info">
@@ -10,17 +11,53 @@
           <h2>{{ this.user.username }}</h2>
           <span>email</span>
           <h3>{{ this.user.email }}</h3>
-          <button class="button" (click)="this.toggleEdit()">프로필 수정</button>
-          <button class="button red">로그아웃</button>
+          <div *ngIf="this.me._id === this.user._id">
+            <button class="button" (click)="this.toggleEdit()">프로필 수정</button>
+            <button class="button red">로그아웃</button>
+          </div>
+          <div *ngIf="this.me._id !== this.user._id">
+            <button *ngIf="!this.user.followers.includes(this.me._id.toString())" class="button" (click)="this.follow()">
+              <fa *ngIf="this.followLoading" name="cog" animation="spin"></fa>
+              <div *ngIf="!this.followLoading">Follow</div>
+            </button>
+            <button *ngIf="this.user.followers.includes(this.me._id.toString())" class="button red" (click)="this.unfollow()">
+              <fa *ngIf="this.followLoading" name="cog" animation="spin"></fa>
+              <div *ngIf="!this.followLoading">Unfollow</div>
+            </button>
+          </div>
         </div>
         <form *ngIf="this.isEdit" class="edit" [formGroup]="this.updateForm" (submit)="this.update()">
           <span>username</span>
           <input type="text" [placeholder]="this.user.username" [value]="this.user.username" formControlName="username">
           <span>email</span>
           <input type="email" [placeholder]="this.user.email" [value]="this.user.email" formControlName="email">
+          <span>password</span>
+          <input type="password" placeholder="New password" formControlName="password">
           <button class="button red" (click)="this.toggleEdit()">수정 취소</button>
-          <button type="submit" class="button">업데이트</button>
+          <button type="submit" class="button">
+            <fa *ngIf="this.updateLoading" name="cog" animation="spin"></fa>
+            <div *ngIf="!this.updateLoading">업데이트</div>
+          </button>
         </form>
+      </div>
+    </div>
+    <div class="profile-wrapper">
+      <div class="stat-wrapper">
+        <div class="stat">
+          <fa name="clone" size="4x"></fa>
+          <span>Vaccines</span>
+          <h4>{{ this.postCount }}</h4>
+        </div>
+        <div class="stat">
+          <fa name="heart" size="4x"></fa>
+          <span>Followings</span>
+          <h4>{{ this.user.followings.length }}</h4>
+        </div>
+        <div class="stat">
+          <fa name="users" size="4x"></fa>
+          <span>Followers</span>
+          <h4>{{ this.user.followers.length }}</h4>
+        </div>
       </div>
     </div>
     <app-post-card *ngFor="let post of this.posts" [post]="post"></app-post-card>

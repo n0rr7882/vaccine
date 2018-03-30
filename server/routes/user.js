@@ -31,9 +31,7 @@ router.get('/:userId', async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.params.userId)
-            .populate('followers')
-            .populate('followings');
+        const user = await User.findById(req.params.userId);
         if (!user) {
             throw new Error('계정이 존재하지 않습니다.');
         }
@@ -58,8 +56,6 @@ router.get('/', async (req, res) => {
         }
         const users = await User.find()
             .where(by, RegExp(q))
-            .populate('followers')
-            .populate('followings')
             .skip(Number(offset))
             .limit(Number(limit))
             .sort('-createdAt');
@@ -75,11 +71,11 @@ router.put('/:userId', filter, async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.params.userId);
-        if (!user) {
+        const target = await User.findById(req.params.userId);
+        if (!target) {
             throw new Error('계정이 존재하지 않습니다.');
         }
-        if (req.user.id.toString() !== user._id.toString()) {
+        if (req.user.id.toString() !== target._id.toString()) {
             throw new Error('권한이 부족합니다.');
         }
         if (req.body.email && (await User.findOne({ email: req.body.email }))) {
@@ -89,12 +85,12 @@ router.put('/:userId', filter, async (req, res) => {
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        if (data.data.email) user.email = data.data.email;
-        if (data.data.username) user.username = data.data.username;
-        if (data.data.password) user.password = data.data.password;
-        const result = await user.save();
-        result.password = undefined;
-        return res.send({ message: 'SUCCESS', result });
+        if (data.data.email) target.email = data.data.email;
+        if (data.data.username) target.username = data.data.username;
+        if (data.data.password) target.password = data.data.password;
+        const user = await target.save();
+        user.password = undefined;
+        return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
         return res.send(400, { message });
@@ -106,13 +102,13 @@ router.delete('/:userId', filter, async (req, res) => {
 
     try {
 
-        const user = await User.findById(req.params.userId);
-        if (!user) throw new Error('계정이 존재하지 않습니다.');
-        if (req.user.id.toString() !== user._id.toString()) {
+        const target = await User.findById(req.params.userId);
+        if (!target) throw new Error('계정이 존재하지 않습니다.');
+        if (req.user.id.toString() !== target._id.toString()) {
             throw new Error('권한이 부족합니다.');
         }
-        const result = await user.remove();
-        return res.send({ message: 'SUCCESS', result });
+        const user = await target.remove();
+        return res.send({ message: 'SUCCESS', target });
 
     } catch ({ message }) {
         return res.send(400, { message });

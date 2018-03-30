@@ -76,6 +76,14 @@ hr {
     margin: 0 10px;
 }
 
+.card-author-thumbnail.following {
+    border: 3px solid rgb(42, 91, 180);
+}
+
+.card-author-thumbnail.me {
+    border: 3px solid rgb(21,152,103);
+}
+
 .card-author-info {
     flex: 1;
     display: flex;

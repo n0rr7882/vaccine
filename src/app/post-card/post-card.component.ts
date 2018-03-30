@@ -84,4 +84,8 @@ export class PostCardComponent implements OnInit {
 
   }
 
+  public get me(): IUser {
+    return this.signService.me;
+  }
+
 }

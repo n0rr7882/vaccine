@@ -25,6 +25,24 @@ router.post('/', filter, async (req, res) => {
 
 });
 
+router.get('/count', async (req, res) => {
+
+    try {
+
+        const { by, q, regex } = req.query;
+        if (!(by && q)) {
+            throw new Error('BY_OR_Q_NOT_EXIST');
+        }
+        const count = await Post.find()
+            .where(by, regex === 'true' ? RegExp(q) : q)
+            .count();
+        return res.send({ message: 'SUCCESS', count });
+
+    } catch ({ message }) {
+        return res.status(400).send({ message });
+    }
+
+});
 
 router.get('/:postId', async (req, res) => {
 
@@ -71,21 +89,21 @@ router.put('/:postId', filter, async (req, res) => {
 
     try {
 
-        const post = await Post.findById(req.params.postId);
-        if (!post) {
+        const target = await Post.findById(req.params.postId);
+        if (!target) {
             throw new Error('포스트가 존재하지 않습니다');
         }
-        if (req.user.id.toString() !== post.author.toString()) {
+        if (req.user.id.toString() !== target.author.toString()) {
             throw new Error('권한이 부족합니다.');
         }
         const data = checkProperty(req.body, 'post', false);
         if (data.message !== 'SUCCESS') {
             throw new Error(data.message);
         }
-        post.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
-        if (data.data.content) post.content = data.data.content;
-        const result = Post.findById((await post.save())._id).populate('author');
-        return res.send({ message: 'SUCCESS', result });
+        target.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
+        if (data.data.content) target.content = data.data.content;
+        const post = Post.findById((await target.save())._id).populate('author');
+        return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
         return res.status(400).send({ message });
@@ -97,16 +115,16 @@ router.delete('/:postId', filter, async (req, res) => {
 
     try {
 
-        const post = await Post.findById(req.params.postId);
-        if (!post) {
+        const target = await Post.findById(req.params.postId);
+        if (!target) {
             throw new Error('포스트가 존재하지 않습니다.');
         }
-        if (req.user.id.toString() !== post.author.toString()) {
+        if (req.user.id.toString() !== target.author.toString()) {
             throw new Error('권한이 부족합니다.');
         }
-        await Comment.remove({ post: post.author });
-        const result = await post.remove();
-        return res.send({ message: 'SUCCESS', result });
+        await Comment.remove({ post: target.author });
+        const post = await target.remove();
+        return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {
         return res.status(400).send({ message });

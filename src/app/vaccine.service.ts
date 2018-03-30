@@ -18,6 +18,11 @@ interface TokenRes {
   user: IUser;
 }
 
+interface CountRes {
+  message: string;
+  count: number;
+}
+
 interface UserRes {
   message: string;
   user: IUser;
@@ -161,12 +166,17 @@ export class PostService {
       .then(res => res.post);
   }
 
+  public count(params: { by: string, q: string, regex?: string }): Promise<number> {
+    return this.http.get<CountRes>(`${API_URL}/posts/count`, { params }).toPromise()
+      .then(res => res.count);
+  }
+
   public readOne(id: string): Promise<IPost> {
     return this.http.get<PostRes>(`${API_URL}/posts/${id}`).toPromise()
       .then(res => res.post);
   }
 
-  public read(params: { limit: string, offset: string, by: string, q: string, regex: string }): Promise<IPost[]> {
+  public read(params: { limit: string, offset: string, by: string, q: string, regex?: string }): Promise<IPost[]> {
     return this.http.get<PostsRes>(`${API_URL}/posts`, { params }).toPromise()
       .then(res => res.posts);
   }

@@ -224,7 +224,7 @@ request body
 ```json
 {
     "message": "SUCCESS",
-    "result": {
+    "user": {
         "followers": [],
         "followings": [],
         "_id": "5aa8c3b5062cd8...",
@@ -262,7 +262,7 @@ request params
 ```json
 {
     "message": "SUCCESS",
-    "result": {
+    "user": {
         "followers": [],
         "followings": [],
         "_id": "5aa8c3b5062cd8f...",

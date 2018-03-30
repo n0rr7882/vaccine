@@ -23,7 +23,8 @@
       </div>
       <div class="card-button-wrapper user-info">
         <a [routerLink]="'/u/' + this.post.author._id" class="user-link">
-          <div class="card-author-thumbnail"></div>
+          <div *ngIf="this.post.author._id === this.me._id" class="card-author-thumbnail me"></div>
+          <div *ngIf="this.post.author._id !== this.me._id" class="card-author-thumbnail" [ngClass]="this.post.author.followers.includes(this.me._id) ? 'following' : null"></div>
           <div class="card-author-info">
             <div class="card-author-name">{{ this.post.author.username }}</div>
             <div class="card-author-email">{{ this.post.author.email }}</div>

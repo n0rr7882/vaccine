@@ -75,20 +75,20 @@ router.put('/:commentId', filter, async (req, res) => {
 
     try {
 
-        const comment = await Comment.findById(req.params.commentId);
-        if (!comment) {
+        const target = await Comment.findById(req.params.commentId);
+        if (!target) {
             throw new Error('존재하지 않는 댓글입니다.');
         }
-        if (req.user.id.toString() !== comment.author.toString()) {
+        if (req.user.id.toString() !== target.author.toString()) {
             throw new Error('권한이 부족합니다.');
         }
         const { message, data: { content } } = checkProperty(req.body, 'comment', false);
         if (message !== 'SUCCESS') {
             throw new Error(message);
         }
-        comment.content = content;
-        const result = await comment.save();
-        return res.send({ message: 'SUCCESS', result });
+        target.content = content;
+        const comment = await target.save();
+        return res.send({ message: 'SUCCESS', comment });
 
     } catch ({ message }) {
         return res.status(400).send({ message });
@@ -100,17 +100,17 @@ router.delete('/:commentId', filter, async (req, res) => {
 
     try {
 
-        const comment = await Comment.findById(req.params.commentId);
-        if (!comment) {
+        const target = await Comment.findById(req.params.commentId);
+        if (!target) {
             throw new Error('존재하지 않는 댓글입니다.');
         }
-        const post = await Post.findById(comment.post);
+        const post = await Post.findById(target.post);
         if (post) {
-            post.comments.pull(comment._id);
+            post.comments.pull(target._id);
             await post.save();
         }
-        const result = await comment.remove();
-        return res.send({ message: 'SUCCESS', result });
+        const comment = await target.remove();
+        return res.send({ message: 'SUCCESS', comment });
 
     } catch ({ message }) {
         return res.status(400).send({ message });
