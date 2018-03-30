@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { IPost, IUser } from '../vaccine.interface';
-import { POSTS_LIMIT, UserService, SignService, PostService, FollowService } from '../vaccine.service';
+import { API_URL, POSTS_LIMIT, UserService, SignService, PostService, FollowService } from '../vaccine.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-user-info',
@@ -26,6 +27,8 @@ export class UserInfoComponent implements OnInit {
     password: new FormControl('', Validators.pattern(/^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{8,20}$/))
   });
 
+  uploader: FileUploader;
+
   constructor(
     private userService: UserService,
     private postService: PostService,
@@ -46,6 +49,16 @@ export class UserInfoComponent implements OnInit {
       this.postCount = 0;
       this.followLoading = false;
       this.updateLoading = false;
+      this.uploader = new FileUploader({
+        url: `${API_URL}/uploads/thumbnail`,
+        authToken: await this.signService.getToken()
+      });
+      this.uploader.onBeforeUploadItem = item => {
+        item.withCredentials = false;
+      };
+      this.uploader.onCompleteAll = () => {
+        this.toastrService.success('썸네일 변경 완료');
+      };
 
       try {
 
@@ -146,6 +159,10 @@ export class UserInfoComponent implements OnInit {
 
   public get me(): IUser {
     return this.signService.me;
+  }
+
+  public thumbnailStyle(id: string): Object {
+    return { 'background-image': `url(${this.userService.getThumbnailURL(id)})` };
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { COMMENTS_LIMIT, CommentService, MypageService } from '../vaccine.service';
+import { COMMENTS_LIMIT, CommentService, MypageService, SignService, UserService } from '../vaccine.service';
 import { IPost, IComment, IUser } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,15 +18,16 @@ export class CommentsComponent implements OnInit {
   private commentLoading: boolean;
   private commentsOffset: number;
   public comments: IComment[] = [];
-  public me: IUser;
 
   writeForm: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
   });
 
   constructor(
-    public commentService: CommentService,
-    public mypageService: MypageService,
+    private commentService: CommentService,
+    private signService: SignService,
+    private userService: UserService,
+    private mypageService: MypageService,
     private toastrService: ToastrService
   ) { }
 
@@ -36,28 +37,25 @@ export class CommentsComponent implements OnInit {
   public set wl(state: boolean) { this.writeLoading = state; }
   public set cl(state: boolean) { this.commentLoading = state; }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    Promise.resolve()
-      .then(() => {
-        this.writeLoading = false;
-        this.commentLoading = false;
-        this.commentsOffset = 0;
-        this.comments = [];
-        return this.mypageService.getMe();
-      })
-      .then(user => {
-        this.me = user;
-        this.readMoreComments();
-      })
-      .catch(err => {
-        if (err.error) {
-          this.toastrService.error(err.error.message, '알 수 없는 오류');
-        } else {
-          this.toastrService.error(err.message, '알 수 없는 오류');
-        }
-        this.writeLoading = false;
-      });
+    this.writeLoading = false;
+    this.commentLoading = false;
+    this.commentsOffset = 0;
+    this.comments = [];
+
+    try {
+
+      await this.readMoreComments();
+
+    } catch (err) {
+      if (err.error) {
+        this.toastrService.error(err.error.message, '알 수 없는 오류');
+      } else {
+        this.toastrService.error(err.message, '알 수 없는 오류');
+      }
+      this.writeLoading = false;
+    }
 
   }
 
@@ -158,6 +156,14 @@ export class CommentsComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  public get me(): IUser {
+    return this.signService.me;
+  }
+
+  public thumbnailStyle(id: string): Object {
+    return { 'background-image': `url(${this.userService.getThumbnailURL(id)})` };
   }
 
 }

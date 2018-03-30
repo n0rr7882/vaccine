@@ -25,7 +25,8 @@ section {
 
 .thumbnail-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
@@ -43,6 +44,26 @@ section {
     border-radius: 50%;
     background-size: cover;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-button {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    font-size: xx-large;
+    font-weight: lighter;
+}
+
+.upload-button:hover {
+    background: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
 }
 
 .thumbnail.following {
@@ -51,6 +72,10 @@ section {
 
 .thumbnail.me {
     border: 8px solid rgb(21,152,103);
+}
+
+#thumbnail-upload {
+    display: none;
 }
 
 .info span, .edit span {

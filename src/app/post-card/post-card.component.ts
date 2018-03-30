@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { PostService, SignService, LikeService } from '../vaccine.service';
+import { UserService, PostService, SignService, LikeService } from '../vaccine.service';
 import { IPost, IUser } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
 
@@ -15,6 +15,7 @@ export class PostCardComponent implements OnInit {
   public isLiked: boolean;
 
   constructor(
+    private userService: UserService,
     private signService: SignService,
     private postService: PostService,
     private likeService: LikeService,
@@ -86,6 +87,10 @@ export class PostCardComponent implements OnInit {
 
   public get me(): IUser {
     return this.signService.me;
+  }
+
+  public thumbnailStyle(id: string): Object {
+    return { 'background-image': `url(${this.userService.getThumbnailURL(id)})` };
   }
 
 }

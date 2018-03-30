@@ -1,20 +1,25 @@
 import { Router } from 'express';
+import multer from 'multer';
 import { filter } from '../tools/authentication';
 import gm from 'gm';
 
 const router = Router();
 
-router.post('/thumbnail', filter, async (req, res) => {
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, cb) => {
+            cb(null, `${__dirname}/../resources/thumbnails-original`);
+        },
+        filename: (req, file, cb) => {
+            cb(null, `original_${req.user.id}`);
+        }
+    })
+});
+
+router.post('/thumbnail', filter, upload.any(), async (req, res) => {
 
     try {
 
-        if (!req.files || !req.files.thumbnail) {
-            throw new Error('썸네일 사진이 필요합니다.');
-        }
-        if (!(/image\/jpeg|image\/png/.test(req.files.thumbnail.mimetype))) {
-            throw new Error('사진 형식이 유효하지 않습니다.');
-        }
-        await req.files.thumbnail.mv(`${__dirname}/../resources/thumbnails-original/original_${req.user._id}`);
         gm(`${__dirname}/../resources/thumbnails-original/original_${req.user.id}`)
             .noProfile()
             .thumb(100, 100, `${__dirname}/../resources/thumbnails/${req.user.id}.jpg`, err => {
@@ -22,7 +27,7 @@ router.post('/thumbnail', filter, async (req, res) => {
             });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });

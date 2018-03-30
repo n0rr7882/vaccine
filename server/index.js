@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
-import fileUpload from 'express-fileupload';
 import cors from 'cors';
 import { join } from 'path';
 
@@ -20,9 +19,8 @@ app.disable('x-powered-by');
 app.use(logger(constants.LOG_FORMAT));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/resources', express.static(join(__dirname, 'resources')));
+app.use('/api/resources', express.static(join(__dirname, 'resources')));
 app.use(express.static(join(__dirname, '..', 'dist')));
-app.use(fileUpload());
 app.use(cors());
 
 app.use(auth);

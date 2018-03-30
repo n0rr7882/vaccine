@@ -72,6 +72,8 @@ hr {
     width: 30px;
     height: 30px;
     background: #abcdef;
+    background-position: center;
+    background-size: cover;
     border-radius: 15px;
     margin: 0 10px;
 }

@@ -88,6 +88,10 @@ export class SignService {
       .then(res => { this.me = res.user; }).catch(console.error);
   }
 
+  public getToken(): Promise<string> {
+    return Promise.resolve(this.cookieService.get('ene'));
+  }
+
 }
 
 @Injectable()
@@ -151,6 +155,10 @@ export class UserService {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.delete<UserRes>(`${API_URL}/users/${id}`, { headers }).toPromise()
       .then(res => res.user);
+  }
+
+  public getThumbnailURL(id): string {
+    return `${API_URL}/resources/thumbnails/${id}.jpg`;
   }
 
 }

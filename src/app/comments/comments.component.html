@@ -2,7 +2,7 @@
   <button class="more-button" (click)="this.readMoreComments()">{{ this.cl ? 'Loading...' : '더 불러오기' }}</button>
   <div *ngFor="let comment of this.comments.reverse()" class="comment">
     <a [routerLink]="'/u/' + comment.author._id">
-      <div class="comment-thumbnail" [ngClass]="this.getCommentState(comment)"></div>
+      <div class="comment-thumbnail" [ngClass]="this.getCommentState(comment)" [ngStyle]="this.thumbnailStyle(comment.author._id)"></div>
     </a>
     <div class="comment-info">
       <div class="comment-author-name">{{ comment.author.username }}</div>
@@ -13,7 +13,7 @@
     </div>
   </div>
   <div class="comment-write">
-    <div class="comment-thumbnail"></div>
+    <div class="comment-thumbnail" [ngStyle]="this.thumbnailStyle(this.me._id)"></div>
     <form class="comment-form" [formGroup]="this.writeForm" (submit)="this.write()">
       <input type="text" placeholder="Comment..." formControlName="content">
     </form>

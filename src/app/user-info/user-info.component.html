@@ -1,10 +1,18 @@
 <section>
   <div *ngIf="this.user" class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
     <div class="profile-wrapper">
+
       <div class="divider thumbnail-wrapper">
-        <div *ngIf="this.me._id === this.user._id" class="thumbnail me"></div>
-        <div *ngIf="this.me._id !== this.user._id" class="thumbnail" [ngClass]="this.user.followers.includes(this.me._id.toString()) ? 'following': null"></div>
+        <div *ngIf="this.me._id === this.user._id" class="thumbnail me" [ngStyle]="this.thumbnailStyle(this.user._id)">
+          <label class="upload-button" for="thumbnail-upload">
+            <div>변경</div>
+          </label>
+        </div>
+        <div *ngIf="this.me._id !== this.user._id" class="thumbnail" [ngClass]="this.user.followers.includes(this.me._id.toString()) ? 'following': null"
+          [ngStyle]="this.thumbnailStyle(this.user._id)"></div>
+        <input id="thumbnail-upload" type="file" ng2FileSelect [uploader]="this.uploader" (onFileSelected)="this.uploader.uploadAll()">
       </div>
+
       <div class="divider profile-info">
         <div *ngIf="!this.isEdit" class="info">
           <span>username</span>
