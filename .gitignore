@@ -42,3 +42,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# resources
+server/resources/thumbnails/*
+server/resources/thumbnails-original/*
