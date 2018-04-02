@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { IUser, IPost, IComment } from './vaccine.interface';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Router } from '@angular/router';
 
 export const API_URL = 'http://localhost:3000/api';
 export const POSTS_LIMIT = 5;
@@ -58,7 +59,7 @@ export class SignService {
 
   public me: IUser;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private router: Router) { }
 
   public login(sign: { email: string, password: string }): Promise<void> {
     return this.http.post<TokenRes>(`${API_URL}/sign`, sign).toPromise()
@@ -66,12 +67,16 @@ export class SignService {
         this.cookieService.set('ene', res.token);
         return this.getMe();
       })
-      .then(user => { this.me = user; })
-      .catch(console.error);
+      .then(user => {
+        this.me = user;
+        this.router.navigate(['/']);
+      });
   }
 
   public logout(): void {
-    this.cookieService.delete('ene');
+    this.cookieService.deleteAll();
+    this.me = undefined;
+    this.router.navigate(['/sign']);
   }
 
   public isLogin(): boolean {

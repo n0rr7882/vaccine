@@ -1,5 +1,4 @@
-<main *ngIf="this.signService.isLogin()">
+<main>
   <app-nav></app-nav>
   <router-outlet></router-outlet>
 </main>
-<app-register *ngIf="!this.signService.isLogin()"></app-register>

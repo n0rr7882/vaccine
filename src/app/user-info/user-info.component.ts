@@ -157,6 +157,10 @@ export class UserInfoComponent implements OnInit {
     }
   }
 
+  public logout(): void {
+    this.signService.logout();
+  }
+
   public get me(): IUser {
     return this.signService.me;
   }

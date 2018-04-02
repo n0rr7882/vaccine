@@ -21,7 +21,7 @@
           <h3>{{ this.user.email }}</h3>
           <div *ngIf="this.me._id === this.user._id">
             <button class="button" (click)="this.toggleEdit()">프로필 수정</button>
-            <button class="button red">로그아웃</button>
+            <button class="button red" (click)="this.logout()">로그아웃</button>
           </div>
           <div *ngIf="this.me._id !== this.user._id">
             <button *ngIf="!this.user.followers.includes(this.me._id.toString())" class="button" (click)="this.follow()">

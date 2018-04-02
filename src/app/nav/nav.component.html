@@ -6,17 +6,22 @@
     </a>
   </div>
   <div class="search">
-    <input #keywords type="text" placeholder="Search">
+    <input *ngIf="this.me" #keywords type="text" placeholder="Search">
   </div>
-  <div class="links" class="active">
-    <div>
+  <div *ngIf="this.me" class="links active">
+    <a routerLink="/t">
       <fa name="bell" size="2x"></fa>
-    </div>
-    <a [routerLink]="['/u', 'me']">
+    </a>
+    <a [routerLink]="['/u', this.me._id]">
       <fa name="user" size="2x"></fa>
     </a>
     <a routerLink="/f">
       <fa name="thumbs-up" size="2x"></fa>
+    </a>
+  </div>
+  <div *ngIf="!this.me" class="links active">
+    <a>
+      <fa name="cog" size="2x" animation="spin"></fa>
     </a>
   </div>
 </nav>

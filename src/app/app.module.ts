@@ -14,7 +14,7 @@ import { FollowsComponent } from './follows/follows.component';
 import { SearchComponent } from './search/search.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 
-import { VaccineRoutingModule } from './vaccine-routing.module';
+import { VaccineRoutesModule } from './vaccine-routes.module';
 import { NavComponent } from './nav/nav.component';
 import { RegisterComponent } from './register/register.component';
 import { PostCardComponent } from './post-card/post-card.component';
@@ -32,6 +32,7 @@ import {
 } from './vaccine.service';
 
 import { CookieService } from 'ngx-cookie-service';
+import { SignGuard } from './sign.guard';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import { CookieService } from 'ngx-cookie-service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    VaccineRoutingModule,
+    VaccineRoutesModule,
     AngularFontAwesomeModule,
     HttpClientModule,
     FormsModule,
@@ -67,7 +68,8 @@ import { CookieService } from 'ngx-cookie-service';
     CommentService,
     FollowService,
     MypageService,
-    LikeService
+    LikeService,
+    SignGuard
   ],
   bootstrap: [AppComponent]
 })
