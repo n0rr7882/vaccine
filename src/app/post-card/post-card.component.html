@@ -13,7 +13,7 @@
         <div class="card-button-icon" *ngIf="!this.getMyActions()" (click)="this.like()">
           <fa name="heart" size="lg"></fa>
         </div>
-        <span class="card-button-count">{{ this.post.goods.length }}</span>
+        <span class="card-button-count">{{ this.post.goodsCount }}</span>
       </div>
       <div class="card-button-wrapper" (click)="this.toggleComments()">
         <div class="card-button-icon" [ngClass]="this.ico ? 'activated-comment' : undefined">

@@ -5,7 +5,8 @@ const postSchema = new Schema({
     author: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' },
     content: { type: String, required: true },
     comments: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'comment' }],
-    goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }]
+    goods: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'user' }],
+    goodsCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
 function remove__v(next) {
@@ -13,6 +14,12 @@ function remove__v(next) {
     return next();
 }
 
+function updateGoodsCount(next) {
+    this.goodsCount = this.goods.length;
+    return next();
+}
+
+postSchema.pre('save', updateGoodsCount);
 postSchema.pre('find', remove__v);
 postSchema.pre('findOne', remove__v);
 postSchema.pre('findById', remove__v);

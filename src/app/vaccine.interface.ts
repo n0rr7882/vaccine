@@ -15,6 +15,7 @@ export interface IPost {
     author: IUser;
     comments: string[];
     goods: string[];
+    goodsCount: number;
     createdAt: Date;
     updatedAt: Date;
 }
