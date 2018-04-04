@@ -1,17 +1,23 @@
 <div class="card">
-  <a href="/">
-    <div class="user-thumbnail"></div>
+  <a [routerLink]="'/u/' + this.user._id">
+    <div *ngIf="this.me._id !== this.user._id" class="user-thumbnail" [ngClass]="this.user.followers.includes(this.me._id.toString()) ? 'following': null"
+      [ngStyle]="this.thumbnailStyle(this.user._id)"></div>
+    <div *ngIf="this.me._id === this.user._id" class="user-thumbnail me" [ngStyle]="this.thumbnailStyle(this.user._id)"></div>
   </a>
   <div class="user-info">
-    <a href="/">
-      <div class="user-name">유동호</div>
+    <a [routerLink]="'/u/' + this.user._id">
+      <div class="user-name">{{ this.user.username }}</div>
     </a>
-    <div class="user-email">n0rr7882@gmail.com</div>
+    <div class="user-email">{{ this.user.email }}</div>
   </div>
-  <button class="button unfollow">
-    Unfollow
-  </button>
-  <!-- <button class="button follow">
-    Follow
-  </button> -->
+  <div *ngIf="this.me._id !== this.user._id">
+    <button *ngIf="!this.user.followers.includes(this.me._id.toString())" class="button follow" (click)="this.follow()">
+      <fa *ngIf="this.followLoading" name="cog" animation="spin"></fa>
+      <div *ngIf="!this.followLoading">Follow</div>
+    </button>
+    <button *ngIf="this.user.followers.includes(this.me._id.toString())" class="button unfollow" (click)="this.unfollow()">
+      <fa *ngIf="this.followLoading" name="cog" animation="spin"></fa>
+      <div *ngIf="!this.followLoading">Unfollow</div>
+    </button>
+  </div>
 </div>

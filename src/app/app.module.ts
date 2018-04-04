@@ -28,7 +28,8 @@ import {
   CommentService,
   FollowService,
   MypageService,
-  LikeService
+  LikeService,
+  SearchService
 } from './vaccine.service';
 
 import { CookieService } from 'ngx-cookie-service';
@@ -69,6 +70,7 @@ import { SignGuard } from './sign.guard';
     FollowService,
     MypageService,
     LikeService,
+    SearchService,
     SignGuard
   ],
   bootstrap: [AppComponent]

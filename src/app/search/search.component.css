@@ -1,0 +1,36 @@
+section {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+.not-found {
+    display: flex;
+    align-items: center;
+}
+
+.not-found span {
+    font-size: xx-large;
+    font-weight: lighter;
+    margin: 25px auto;
+    text-align: center;
+    color: #0f0f0f;
+}
+
+.more-button {
+    margin: 0 10px 10px 10px;
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+    color: rgb(21,152,103);
+    width: calc(100% - 20px);
+}
+
+.more-button:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}

@@ -15,6 +15,7 @@ const routes: Routes = [
     { path: 't', component: TimelineComponent, canActivate: [SignGuard] },
     { path: 'f', component: FollowsComponent, canActivate: [SignGuard] },
     { path: 'u/:id', component: UserInfoComponent, canActivate: [SignGuard] },
+    { path: 'search', component: SearchComponent, canActivate: [SignGuard] },
     { path: 'sign', component: RegisterComponent },
     { path: '**', redirectTo: 't' }
 ];

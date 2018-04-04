@@ -6,7 +6,7 @@
     </a>
   </div>
   <div class="search">
-    <input *ngIf="this.me" #keywords type="text" placeholder="Search">
+    <input *ngIf="this.me" type="text" placeholder="Search" [(ngModel)]="this.keywords" (keyup)="this.handleSearch()">
   </div>
   <div *ngIf="this.me" class="links active">
     <a routerLink="/t">

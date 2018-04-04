@@ -1,8 +1,5 @@
 main {
     display: flex;
     flex-direction: column;
-}
-
-router-outlet {
-    margin-top: 60px;
+    padding-top: 60px;
 }

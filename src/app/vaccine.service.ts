@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { IUser, IPost, IComment } from './vaccine.interface';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 export const API_URL = 'http://localhost:3000/api';
 export const POSTS_LIMIT = 5;
+export const USERS_LIMIT = 5;
 export const COMMENTS_LIMIT = 5;
 
 interface Response {
@@ -277,6 +278,33 @@ export class LikeService {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.delete<Response>(`${API_URL}/likes/${postId}`, { headers }).toPromise()
       .then(() => { });
+  }
+
+}
+
+@Injectable()
+export class SearchService {
+
+  private keywordsChange: EventEmitter<string> = new EventEmitter();
+
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
+
+  public users(params: { limit: string, offset: string, q: string }) {
+    return this.http.get<UsersRes>(`${API_URL}/search/users`, { params }).toPromise()
+      .then(res => res.users);
+  }
+
+  public posts(params: { limit: string, offset: string, q: string }) {
+    return this.http.get<PostsRes>(`${API_URL}/search/posts`, { params }).toPromise()
+      .then(res => res.posts);
+  }
+
+  public emitKeywordsChangeEvent(keywords: string) {
+    this.keywordsChange.emit(keywords);
+  }
+
+  public getKeywordsChangeEmitter() {
+    return this.keywordsChange;
   }
 
 }

@@ -1,3 +1,11 @@
-<p>
-  search works!
-</p>
+<section>
+  <div class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
+    <app-user-card *ngFor="let user of this.users" [user]="user"></app-user-card>
+    <button *ngIf="(this.users.length !== 0) && (this.posts.length !== 0)" class="more-button" (click)="this.readMoreUsers()">{{ this.usersLoading ? 'Loading...' : '계정 더 보기' }}</button>
+    <app-post-card *ngFor="let post of this.posts" [post]="post"></app-post-card>
+  </div>
+  <div class="not-found" *ngIf="(this.users.length === 0) && (this.posts.length === 0)">
+    <span>검색결과가
+      <br>없습니다.</span>
+  </div>
+</section>

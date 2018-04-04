@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SignService } from '../vaccine.service';
+import { SignService, SearchService } from '../vaccine.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -8,7 +9,13 @@ import { SignService } from '../vaccine.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private signService: SignService) { }
+  public keywords: string;
+
+  constructor(
+    private signService: SignService,
+    private searchService: SearchService,
+    private router: Router
+  ) { }
 
   async ngOnInit() {
     await this.signService.loadMe();
@@ -16,6 +23,13 @@ export class NavComponent implements OnInit {
 
   public get me() {
     return this.signService.me;
+  }
+
+  public handleSearch() {
+    if (this.keywords !== '') {
+      this.router.navigate(['/search']);
+    }
+    this.searchService.emitKeywordsChangeEvent(this.keywords);
   }
 
 }

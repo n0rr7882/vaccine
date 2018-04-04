@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SignService } from './vaccine.service';
+import { SearchService } from './vaccine.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +7,7 @@ import { SignService } from './vaccine.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public signService: SignService) { }
+
+  constructor() { }
 
 }
