@@ -13,6 +13,8 @@ export class PostCardComponent implements OnInit {
   @Input() post: IPost;
   private isCommentOpen: boolean;
   public isLiked: boolean;
+  public isDeleted: boolean;
+  public deleteLoding: boolean;
 
   constructor(
     private userService: UserService,
@@ -24,6 +26,9 @@ export class PostCardComponent implements OnInit {
 
   ngOnInit() {
     this.isCommentOpen = false;
+    this.isDeleted = false;
+    this.deleteLoding = false;
+
     this.getMyActions();
   }
 
@@ -91,6 +96,32 @@ export class PostCardComponent implements OnInit {
 
   public thumbnailStyle(id: string): Object {
     return { 'background-image': `url(${this.userService.getThumbnailURL(id)})` };
+  }
+
+  public deletePost(): void {
+
+    this.deleteLoding = true;
+
+    this.postService.delete(this.post._id)
+      .then(post => {
+        this.isDeleted = true;
+        this.deleteLoding = false;
+      })
+      .catch(err => {
+        if (err.error) {
+          this.toastrService.error(err.error.message, '포스트 삭제 중 에러');
+        } else {
+          this.toastrService.error(err.message, '포스트 삭제 중 에러');
+        }
+      });
+  }
+
+  public canIDelete(): boolean {
+    if (this.post.author._id === this.me._id) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
