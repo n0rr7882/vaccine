@@ -12,3 +12,21 @@ section {
 h2 {
     margin-left: 10px;
 }
+
+.more-button {
+    margin: 0 10px 10px 10px;
+    outline: none;
+    background: #ffffff;
+    padding: 10px 15px;
+    font-size: medium;
+    border-radius: 5px;
+    border: 1px solid rgb(21,152,103);
+    background: #ffffff;
+    color: rgb(21,152,103);
+    width: calc(100% - 20px);
+}
+
+.more-button:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}
