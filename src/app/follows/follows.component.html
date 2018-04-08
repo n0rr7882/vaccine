@@ -1,10 +1,10 @@
 <section>
   <div class="wrapper">
-    <h2>내가 팔로잉함 (12명)</h2>
-    <app-user-card *ngFor="let post of [0,1,2,3,4,5]"></app-user-card>
+    <h2>내가 팔로잉함 ({{ this.followings.length }}명)</h2>
+    <app-user-card *ngFor="let user of this.followings" [user]="user"></app-user-card>
   </div>
   <div class="wrapper">
-    <h2>나를 팔로우함 (32명)</h2>
-    <app-user-card *ngFor="let post of [0,1,2,3,4,5]"></app-user-card>
+    <h2>나를 팔로우함 ({{ this.followers.length }}명)</h2>
+    <app-user-card *ngFor="let user of this.followers" [user]="user"></app-user-card>
   </div>
 </section>

@@ -20,9 +20,8 @@ router.post('/', async (req, res) => {
         user.password = user.__v = undefined;
         return res.send({ message: 'SUCCESS', user });
 
-    } catch (err) {
-        console.error(err);
-        return res.send(400, { message: err.message });
+    } catch ({ message }) {
+        return res.status(400).send({ message });
     }
 
 });
@@ -38,7 +37,7 @@ router.get('/:userId', async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -62,7 +61,7 @@ router.get('/', async (req, res) => {
         return res.send({ message: 'SUCCESS', users });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -93,7 +92,7 @@ router.put('/:userId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -111,7 +110,7 @@ router.delete('/:userId', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', target });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });

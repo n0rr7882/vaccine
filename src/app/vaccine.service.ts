@@ -129,6 +129,12 @@ export class MypageService {
       .then(res => res.user);
   }
 
+  public getFollows(params: { limit: string, offset: string, type: string }): Promise<IUser[]> {
+    const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
+    return this.http.get<UsersRes>(`${API_URL}/mypages/follows`, { headers, params }).toPromise()
+      .then(res => res.users);
+  }
+
 }
 
 @Injectable()

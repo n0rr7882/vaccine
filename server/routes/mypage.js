@@ -25,7 +25,7 @@ router.get('/followings-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 });
 
@@ -44,7 +44,7 @@ router.get('/liked-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 });
 
@@ -63,7 +63,7 @@ router.get('/commented-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -83,7 +83,7 @@ router.get('/my-posts', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', posts });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
     }
 
 });
@@ -96,7 +96,31 @@ router.get('/me', filter, async (req, res) => {
         return res.send({ message: 'SUCCESS', user });
 
     } catch ({ message }) {
-        return res.send(400, { message });
+        return res.status(400).send({ message });
+    }
+
+});
+
+router.get('/follows', filter, async (req, res) => {
+
+    try {
+
+        const { limit, offset, type } = req.query;
+        if (!(limit && offset)) {
+            throw new Error('LIMIT_OR_OFFSET_NOT_EXIST');
+        }
+        if (['followings', 'followers'].indexOf(type) === -1) {
+            throw new Error('TYPE_NOT_EXIST(following or follower)');
+        }
+
+        const users = await User.find()
+            .where(type, req.user.id)
+            .limit(Number(limit))
+            .skip(Number(offset));
+        return res.send({ message: 'SUCCESS', users });
+
+    } catch ({ message }) {
+        return res.status(400).send({ message });
     }
 
 });
