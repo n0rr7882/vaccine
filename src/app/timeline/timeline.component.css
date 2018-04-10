@@ -25,14 +25,14 @@ section {
 
 .write textarea {
     transition: all 0.2s;
-    margin: 10px;
+    margin: 15px 15px 10px 15px;
     outline: none;
     background: #fafafa;
     border: 1px solid #e0e0e0;
     border-radius: 5px;
     padding: 7px;
     height: 100px;
-    width: calc(100% - 20px);
+    width: calc(100% - 30px);
     resize: none;
     font-size: larger;
     text-align: start;
@@ -45,7 +45,7 @@ section {
 }
 
 .write button {
-    margin: 0 10px 10px 10px;
+    margin: 0 15px 15px 15px;
     outline: none;
     background: #ffffff;
     padding: 10px 15px;

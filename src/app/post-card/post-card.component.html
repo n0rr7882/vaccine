@@ -3,7 +3,13 @@
     <div class="card-contents-text">삭제되었습니다.</div>
   </div>
   <div *ngIf="!this.isDeleted" class="card-contents">
-    <pre class="card-contents-text" [innerHTML]="this.renderHashtags(this.post.content)"></pre>
+    <pre *ngIf="!this.isEditing" class="card-contents-text" [innerHTML]="this.renderHashtags(this.post.content)"></pre>
+    <form *ngIf="this.isEditing" class="update" [formGroup]="this.updateForm" (submit)="this.updatePost()">
+      <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content"></textarea>
+      <div>
+        <button type="submit">{{ this.updateLoading ? 'Loading..' : '수정' }}</button>
+      </div>
+    </form>
     <hr>
     <div class="card-icons">
       <div class="card-button-wrapper">
@@ -32,9 +38,13 @@
           </div>
         </a>
       </div>
+      <div *ngIf="this.canIDelete()" class="card-button-wrapper card-button-icon" [ngClass]="this.isEditing ? 'activated-comment' : undefined"
+        (click)="this.toggleEdit()">
+        <fa name="edit" size="lg"></fa>
+      </div>
       <div *ngIf="this.canIDelete()" class="card-button-wrapper delete-button" (click)="this.deletePost()">
-        <fa *ngIf="!this.deleteLoding" name="trash" size="lg"></fa>
-        <fa *ngIf="this.deleteLoding" name="cog" size="lg" animation="spin"></fa>
+        <fa *ngIf="!this.deleteLoading" name="trash" size="lg"></fa>
+        <fa *ngIf="this.deleteLoading" name="cog" size="lg" animation="spin"></fa>
       </div>
     </div>
     <hr *ngIf="this.ico">

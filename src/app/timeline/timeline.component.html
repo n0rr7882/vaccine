@@ -1,5 +1,5 @@
 <section>
-  <div class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
+  <div *ngIf="this.signService.me" class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
     <div class="write">
       <form action="post" [formGroup]="this.writeForm" (submit)="this.write()">
         <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content"></textarea>

@@ -102,7 +102,7 @@ router.put('/:postId', filter, async (req, res) => {
         }
         target.hashtags = data.data.content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
         if (data.data.content) target.content = data.data.content;
-        const post = Post.findById((await target.save())._id).populate('author');
+        const post = await Post.findById((await target.save())._id).populate('author');
         return res.send({ message: 'SUCCESS', post });
 
     } catch ({ message }) {

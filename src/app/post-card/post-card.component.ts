@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService, PostService, SignService, LikeService } from '../vaccine.service';
 import { IPost, IUser } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +15,11 @@ export class PostCardComponent implements OnInit {
   private isCommentOpen: boolean;
   public isLiked: boolean;
   public isDeleted: boolean;
-  public deleteLoding: boolean;
+  public isEditing: boolean;
+  public deleteLoading: boolean;
+  public updateLoading: boolean;
+
+  public updateForm: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -27,7 +32,12 @@ export class PostCardComponent implements OnInit {
   ngOnInit() {
     this.isCommentOpen = false;
     this.isDeleted = false;
-    this.deleteLoding = false;
+    this.isEditing = false;
+    this.deleteLoading = false;
+    this.updateLoading = false;
+    this.updateForm = new FormGroup({
+      content: new FormControl(this.post.content, Validators.required)
+    });
 
     this.getMyActions();
   }
@@ -38,6 +48,10 @@ export class PostCardComponent implements OnInit {
   public toggleComments() {
     this.isCommentOpen = !this.isCommentOpen;
     this.reloadPost();
+  }
+
+  public toggleEdit() {
+    this.isEditing = !this.isEditing;
   }
 
   public getMyActions() {
@@ -98,14 +112,45 @@ export class PostCardComponent implements OnInit {
     return { 'background-image': `url(${this.userService.getThumbnailURL(id)})` };
   }
 
+  public updatePost(): void {
+
+    Promise.resolve()
+      .then(() => {
+        if (this.updateForm.valid) {
+          return this.updateForm.value;
+        }
+        throw new Error('나의 소식을 적어주세요!');
+      })
+      .then(data => {
+        this.updateLoading = true;
+        return this.postService.update(this.post._id, data);
+      })
+      .then(post => {
+        this.post = post;
+        this.updateForm.setValue({ content: this.post.content });
+        this.toastrService.success('수정 완료');
+        this.toggleEdit();
+        this.updateLoading = false;
+      })
+      .catch(err => {
+        if (err.error) {
+          this.toastrService.error(err.error.message, '업로드 실패');
+        } else {
+          this.toastrService.error(err.message, '업로드 실패');
+        }
+        this.updateLoading = false;
+      });
+
+  }
+
   public deletePost(): void {
 
-    this.deleteLoding = true;
+    this.deleteLoading = true;
 
     this.postService.delete(this.post._id)
       .then(post => {
         this.isDeleted = true;
-        this.deleteLoding = false;
+        this.deleteLoading = false;
       })
       .catch(err => {
         if (err.error) {
