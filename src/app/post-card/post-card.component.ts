@@ -124,4 +124,11 @@ export class PostCardComponent implements OnInit {
     }
   }
 
+  renderHashtags(contents: string): string {
+    const hashtagFormat = `<a class="tag" [routerLink]="'/search/$1'">#$1</a>`;
+    return contents
+      .replace(/(<([^>]+)>)/ig, '')
+      .replace(/#([^\s`~!@#$%^&*()+=-]{2,})/g, hashtagFormat);
+  }
+
 }

@@ -20,7 +20,9 @@
 }
 
 .card-contents-text {
+    margin: 0;
     font-size: larger;
+    white-space: pre-line;
 }
 
 .card-icons {
@@ -117,4 +119,10 @@ hr {
 
 .delete-button:hover {
     color: rgb(255, 97, 97);
+}
+
+.tag {
+    text-decoration: none;
+    color: rgb(42, 91, 180);
+    font-weight: bolder;
 }

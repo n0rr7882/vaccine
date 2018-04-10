@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -47,7 +48,7 @@ import { SignGuard } from './sign.guard';
     RegisterComponent,
     PostCardComponent,
     UserCardComponent,
-    CommentsComponent
+    CommentsComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +60,7 @@ import { SignGuard } from './sign.guard';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     InfiniteScrollModule,
-    FileUploadModule
+    FileUploadModule,
   ],
   providers: [
     CookieService,
@@ -71,7 +72,7 @@ import { SignGuard } from './sign.guard';
     MypageService,
     LikeService,
     SearchService,
-    SignGuard
+    SignGuard,
   ],
   bootstrap: [AppComponent]
 })

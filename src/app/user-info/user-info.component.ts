@@ -40,41 +40,41 @@ export class UserInfoComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.route.params.subscribe(async params => {
+    try {
 
-      this.isEdit = false;
-      this.postsOffset = 0;
-      this.posts = [];
-      this.user = null;
-      this.postCount = 0;
-      this.followLoading = false;
-      this.updateLoading = false;
-      this.uploader = new FileUploader({
-        url: `${API_URL}/uploads/thumbnail`,
-        authToken: await this.signService.getToken()
-      });
-      this.uploader.onBeforeUploadItem = item => {
-        item.withCredentials = false;
-      };
-      this.uploader.onCompleteAll = () => {
-        this.toastrService.success('썸네일 변경 완료');
-      };
+      this.route.params.subscribe(async params => {
 
-      try {
+        this.isEdit = false;
+        this.postsOffset = 0;
+        this.posts = [];
+        this.user = null;
+        this.postCount = 0;
+        this.followLoading = false;
+        this.updateLoading = false;
+        this.uploader = new FileUploader({
+          url: `${API_URL}/uploads/thumbnail`,
+          authToken: await this.signService.getToken()
+        });
+        this.uploader.onBeforeUploadItem = item => {
+          item.withCredentials = false;
+        };
+        this.uploader.onCompleteAll = () => {
+          this.toastrService.success('썸네일 변경 완료');
+        };
 
         await this.signService.loadMe();
         await this.loadUser();
         await this.readMorePosts();
 
-      } catch (err) {
-        if (err.error) {
-          this.toastrService.error(err.error.message, 'ERROR');
-        } else {
-          this.toastrService.error(err.message, 'ERROR');
-        }
-      }
+      });
 
-    });
+    } catch (err) {
+      if (err.error) {
+        this.toastrService.error(err.error.message, 'ERROR');
+      } else {
+        this.toastrService.error(err.message, 'ERROR');
+      }
+    }
 
   }
 

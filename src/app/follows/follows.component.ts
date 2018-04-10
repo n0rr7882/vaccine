@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { USERS_LIMIT, MypageService, FollowService } from '../vaccine.service';
+import { USERS_LIMIT, MypageService, FollowService, SignService } from '../vaccine.service';
 import { IUser } from '../vaccine.interface';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,18 +20,22 @@ export class FollowsComponent implements OnInit {
   followersLoading: boolean;
 
   constructor(
+    private signService: SignService,
     private mypageService: MypageService,
     private followService: FollowService,
     private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
-    this.followersLoading = false;
-    this.followingsLoading = false;
-    this.followersOffset = 0;
-    this.followingsOffset = 0;
-    this.loadMoreFollowers();
-    this.loadMoreFollowings();
+    this.signService.loadMe()
+      .then(() => {
+        this.followersLoading = false;
+        this.followingsLoading = false;
+        this.followersOffset = 0;
+        this.followingsOffset = 0;
+        this.loadMoreFollowers();
+        this.loadMoreFollowings();
+      });
   }
 
   loadMoreFollowings() {
@@ -88,6 +92,10 @@ export class FollowsComponent implements OnInit {
         this.followersLoading = false;
       });
 
+  }
+
+  get me(): IUser {
+    return this.signService.me;
   }
 
 }

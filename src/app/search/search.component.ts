@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { POSTS_LIMIT, USERS_LIMIT, SearchService } from '../vaccine.service';
 import { IPost, IUser } from '../vaccine.interface';
 import { Subscription } from 'rxjs/Subscription';
@@ -11,7 +12,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SearchComponent implements OnInit {
 
-  keywordsSubscription: Subscription;
   keywords: string;
   posts: IPost[];
   users: IUser[];
@@ -19,15 +19,19 @@ export class SearchComponent implements OnInit {
   usersOffset: number;
   usersLoading: boolean;
 
-  constructor(private searchService: SearchService, private toastrService: ToastrService) { }
+  constructor(
+    private searchService: SearchService,
+    private toastrService: ToastrService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
     this.reset();
-    this.keywordsSubscription = this.searchService.getKeywordsChangeEmitter()
-      .subscribe(keywords => {
+    this.route.params
+      .subscribe(params => {
         this.reset();
-        if (keywords !== '') {
-          this.keywords = keywords;
+        if (params['keywords'] !== '') {
+          this.keywords = params['keywords'];
           this.readMorePosts();
           this.readMoreUsers();
         }

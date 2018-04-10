@@ -3,7 +3,7 @@
     <div class="card-contents-text">삭제되었습니다.</div>
   </div>
   <div *ngIf="!this.isDeleted" class="card-contents">
-    <div class="card-contents-text">{{ this.post.content }}</div>
+    <pre class="card-contents-text" [innerHTML]="this.renderHashtags(this.post.content)"></pre>
     <hr>
     <div class="card-icons">
       <div class="card-button-wrapper">

@@ -26,10 +26,7 @@ export class NavComponent implements OnInit {
   }
 
   public handleSearch() {
-    if (this.keywords !== '') {
-      this.router.navigate(['/search']);
-    }
-    this.searchService.emitKeywordsChangeEvent(this.keywords);
+    this.router.navigate([`/search/${this.keywords}`]);
   }
 
 }

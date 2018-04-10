@@ -1,11 +1,11 @@
 <section>
   <div class="wrapper">
-    <h2>내가 팔로잉함 ({{ this.followings.length }}명)</h2>
+    <h2>내가 팔로잉함 ({{ this.me ? this.me.followings.length : 'O' }}명)</h2>
     <app-user-card *ngFor="let user of this.followings" [user]="user"></app-user-card>
     <button class="more-button" (click)="this.loadMoreFollowings()">{{ this.followingsLoading ? 'Loading...' : '더 불러오기' }}</button>
   </div>
   <div class="wrapper">
-    <h2>나를 팔로우함 ({{ this.followers.length }}명)</h2>
+    <h2>나를 팔로우함 ({{ this.me ? this.me.followers.length : 'O' }}명)</h2>
     <app-user-card *ngFor="let user of this.followers" [user]="user"></app-user-card>
     <button class="more-button" (click)="this.loadMoreFollowers()">{{ this.followersLoading ? 'Loading...' : '더 불러오기' }}</button>
   </div>
