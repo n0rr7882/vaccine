@@ -66,6 +66,7 @@ export class TimelineComponent implements OnInit {
       .then(post => {
         this.posts.unshift(post);
         this.writeForm.setValue({ content: '' });
+        this.renderedHashtags = null;
         this.toastrService.success('업로드 성공');
         this.writeLoading = false;
       })
