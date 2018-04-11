@@ -1,8 +1,12 @@
 <section>
   <div *ngIf="this.signService.me" class="wrapper" infiniteScroll [infiniteScrollDistance]="1" (scrolled)="this.readMorePosts()">
     <div class="write">
+      <div class="hashtags-wrapper">
+        <app-hashtags [hashtags]="this.renderedHashtags"></app-hashtags>
+        <hr *ngIf="this.renderedHashtags">
+      </div>
       <form action="post" [formGroup]="this.writeForm" (submit)="this.write()">
-        <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content"></textarea>
+        <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content" (keyup)="this.handleKeyup()"></textarea>
         <button type="submit">{{ this.wl ? 'Loading..' : '올리기' }}</button>
       </form>
     </div>

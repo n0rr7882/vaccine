@@ -1,0 +1,5 @@
+<div class="wrapper">
+  <a *ngFor="let hashtag of this.hashtags" [routerLink]="'/search/' + hashtag">
+    <button>{{ hashtag }}</button>
+  </a>
+</div>

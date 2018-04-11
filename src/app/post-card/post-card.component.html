@@ -3,7 +3,9 @@
     <div class="card-contents-text">삭제되었습니다.</div>
   </div>
   <div *ngIf="!this.isDeleted" class="card-contents">
-    <pre *ngIf="!this.isEditing" class="card-contents-text" [innerHTML]="this.renderHashtags(this.post.content)"></pre>
+    <app-hashtags *ngIf="this.post.hashtags" [hashtags]="this.post.hashtags"></app-hashtags>
+    <hr *ngIf="this.post.hashtags">
+    <pre *ngIf="!this.isEditing" class="card-contents-text">{{this.post.content}}</pre>
     <form *ngIf="this.isEditing" class="update" [formGroup]="this.updateForm" (submit)="this.updatePost()">
       <textarea name="content" placeholder="지금 이 기분을 친구들과 공유하세요!" formControlName="content"></textarea>
       <div>

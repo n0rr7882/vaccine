@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { PostCardComponent } from './post-card/post-card.component';
 import { UserCardComponent } from './user-card/user-card.component';
 import { CommentsComponent } from './comments/comments.component';
+import { HashtagsComponent } from './hashtags/hashtags.component';
 
 import {
   SignService,
@@ -49,6 +50,7 @@ import { SignGuard } from './sign.guard';
     PostCardComponent,
     UserCardComponent,
     CommentsComponent,
+    HashtagsComponent,
   ],
   imports: [
     BrowserModule,

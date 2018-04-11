@@ -52,12 +52,20 @@
     color: gray;
 }
 
+.card-button-icon:hover {
+    color: darkgray;
+}
+
 .card-button-count {
     color: gray;
 }
 
 .activated-like {
-    color: rgb(255, 97, 97)
+    color: rgb(255, 97, 97);
+}
+
+.activated-like:hover {
+    color: rgb(255, 129, 129);
 }
 
 .activated-comment {
@@ -120,13 +128,6 @@ hr {
 .delete-button:hover {
     color: rgb(255, 97, 97);
 }
-
-.tag {
-    text-decoration: none;
-    color: rgb(42, 91, 180);
-    font-weight: bolder;
-}
-
 
 .update {
     width: 100%;

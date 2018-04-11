@@ -17,6 +17,7 @@ export class TimelineComponent implements OnInit {
 
   public posts: IPost[];
 
+  public renderedHashtags: string[];
   writeForm: FormGroup = new FormGroup({
     content: new FormControl('', Validators.required)
   });
@@ -44,6 +45,10 @@ export class TimelineComponent implements OnInit {
 
   public set wl(state: boolean) { this.writeLoading = state; }
   public set pl(state: boolean) { this.postLoading = state; }
+
+  handleKeyup() {
+    this.renderedHashtags = this.parseHashtags(this.writeForm.value.content);
+  }
 
   public write(): void {
 
@@ -97,6 +102,10 @@ export class TimelineComponent implements OnInit {
         this.postLoading = false;
       });
 
+  }
+
+  parseHashtags(content: string): string[] {
+    return content.match(/#([^\s`~!@#$%^&*()+=-]{2,})/g);
   }
 
 }

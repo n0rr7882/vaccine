@@ -1,0 +1,21 @@
+.wrapper {
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.wrapper button {
+    padding: 5px 10px;
+    background: transparent;
+    color: rgb(21,152,103);
+    font-weight: bolder;
+    border: 1px solid rgb(21,152,103);
+    border-radius: 100px;
+    margin: 0 5px;
+}
+
+.wrapper button:hover {
+    background: rgb(21,152,103);
+    color: #ffffff;
+}
