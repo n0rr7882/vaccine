@@ -73,7 +73,7 @@ export class CommentsComponent implements OnInit {
         return this.commentService.create(this.post._id, data);
       })
       .then(comment => {
-        this.comments.unshift(comment);
+        this.comments.push(comment);
         this.writeForm.setValue({ content: '' });
         this.toastrService.success('코멘트 등록 성공');
         this.writeLoading = false;
@@ -125,7 +125,7 @@ export class CommentsComponent implements OnInit {
         return this.commentService.read(params);
       })
       .then(comments => {
-        this.comments.push(...comments);
+        this.comments.unshift(...comments.reverse());
         this.commentLoading = false;
         this.commentsOffset += COMMENTS_LIMIT;
       })

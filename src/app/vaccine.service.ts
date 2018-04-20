@@ -5,7 +5,7 @@ import { IUser, IPost, IComment } from './vaccine.interface';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { Router } from '@angular/router';
 
-export const API_URL = 'http://localhost:3000/api';
+export const API_URL = '/api';
 export const POSTS_LIMIT = 5;
 export const USERS_LIMIT = 5;
 export const COMMENTS_LIMIT = 5;
@@ -91,7 +91,7 @@ export class SignService {
   public loadMe(): Promise<void> {
     const headers = new HttpHeaders({ 'Authorization': this.cookieService.get('ene') });
     return this.http.get<UserRes>(`${API_URL}/sign/me`, { headers }).toPromise()
-      .then(res => { this.me = res.user; }).catch(console.error);
+      .then(res => { this.me = res.user; });
   }
 
   public getToken(): Promise<string> {

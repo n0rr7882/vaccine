@@ -1,6 +1,6 @@
 <div class="comments">
   <button class="more-button" (click)="this.readMoreComments()">{{ this.cl ? 'Loading...' : '더 불러오기' }}</button>
-  <div *ngFor="let comment of this.comments.reverse()" class="comment">
+  <div *ngFor="let comment of this.comments" class="comment">
     <a [routerLink]="'/u/' + comment.author._id">
       <div class="comment-thumbnail" [ngClass]="this.getCommentState(comment)" [ngStyle]="this.thumbnailStyle(comment.author._id)"></div>
     </a>
