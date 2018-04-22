@@ -23,6 +23,8 @@ import { UserCardComponent } from './user-card/user-card.component';
 import { CommentsComponent } from './comments/comments.component';
 import { HashtagsComponent } from './hashtags/hashtags.component';
 
+import { TimeAgoPipe } from 'time-ago-pipe';
+
 import {
   SignService,
   UserService,
@@ -51,6 +53,7 @@ import { SignGuard } from './sign.guard';
     UserCardComponent,
     CommentsComponent,
     HashtagsComponent,
+    TimeAgoPipe,
   ],
   imports: [
     BrowserModule,

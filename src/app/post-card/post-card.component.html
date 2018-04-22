@@ -36,7 +36,7 @@
             [ngStyle]="this.thumbnailStyle(this.post.author._id)"></div>
           <div class="card-author-info">
             <div class="card-author-name">{{ this.post.author.username }}</div>
-            <div class="card-author-email">{{ this.post.createdAt | date:'medium' }}</div>
+            <div class="card-author-email">{{ this.post.createdAt | timeAgo }}</div>
           </div>
         </a>
       </div>
