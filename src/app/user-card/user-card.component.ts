@@ -41,6 +41,7 @@ export class UserCardComponent implements OnInit {
       } else {
         this.toastrService.error(err.message, '팔로우 실패');
       }
+      this.followLoading = false;
     }
   }
 
@@ -58,6 +59,7 @@ export class UserCardComponent implements OnInit {
       } else {
         this.toastrService.error(err.message, '언팔로우 실패');
       }
+      this.followLoading = false;
     }
   }
 

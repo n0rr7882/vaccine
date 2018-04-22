@@ -76,12 +76,12 @@ export class PostCardComponent implements OnInit {
           this.likeLoading = false;
         })
         .catch(err => {
-          this.likeLoading = false;
           if (err.error) {
             this.toastrService.error(err.error.message, '좋아요 중 에러');
           } else {
             this.toastrService.error(err.message, '좋아요 중 에러');
           }
+          this.likeLoading = false;
         });
 
     }
@@ -100,12 +100,12 @@ export class PostCardComponent implements OnInit {
           this.likeLoading = false;
         })
         .catch(err => {
-          this.likeLoading = false;
           if (err.error) {
             this.toastrService.error(err.error.message, '좋아요 취소 중 에러');
           } else {
             this.toastrService.error(err.message, '좋아요 취소 중 에러');
           }
+          this.likeLoading = false;
         });
 
     }
