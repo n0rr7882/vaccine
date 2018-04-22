@@ -4,4 +4,4 @@
 
 # Demo
 
-- [http://norr.uy.to:3000](http://norr.uy.to:3000)
+- [http://norr.uy.to:3000](http://norr.uy.to:3000) (mlab을 이용중이므로 속도가 매우 느릴 수 있습니다.)
