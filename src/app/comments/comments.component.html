@@ -15,7 +15,8 @@
   <div class="comment-write">
     <div class="comment-thumbnail" [ngStyle]="this.thumbnailStyle(this.me._id)"></div>
     <form class="comment-form" [formGroup]="this.writeForm" (submit)="this.write()">
-      <input type="text" placeholder="Comment..." formControlName="content">
+      <input *ngIf="!this.wl" type="text" placeholder="Comment..." formControlName="content">
+      <input *ngIf="this.wl" type="text" placeholder="Comment..." formControlName="content" disabled>
     </form>
   </div>
 </div>

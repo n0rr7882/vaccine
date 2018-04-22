@@ -18,6 +18,7 @@ export class PostCardComponent implements OnInit {
   public isEditing: boolean;
   public deleteLoading: boolean;
   public updateLoading: boolean;
+  public likeLoading: boolean;
 
   public updateForm: FormGroup;
 
@@ -35,6 +36,7 @@ export class PostCardComponent implements OnInit {
     this.isEditing = false;
     this.deleteLoading = false;
     this.updateLoading = false;
+    this.likeLoading = false;
     this.updateForm = new FormGroup({
       content: new FormControl(this.post.content, Validators.required)
     });
@@ -64,29 +66,49 @@ export class PostCardComponent implements OnInit {
 
   public like() {
 
-    this.likeService.like(this.post._id)
-      .then(() => this.reloadPost())
-      .catch(err => {
-        if (err.error) {
-          this.toastrService.error(err.error.message, '좋아요 중 에러');
-        } else {
-          this.toastrService.error(err.message, '좋아요 중 에러');
-        }
-      });
+    if (!this.likeLoading) {
+
+      this.likeLoading = true;
+
+      this.likeService.like(this.post._id)
+        .then(() => {
+          this.reloadPost();
+          this.likeLoading = false;
+        })
+        .catch(err => {
+          this.likeLoading = false;
+          if (err.error) {
+            this.toastrService.error(err.error.message, '좋아요 중 에러');
+          } else {
+            this.toastrService.error(err.message, '좋아요 중 에러');
+          }
+        });
+
+    }
 
   }
 
   public unlike() {
 
-    this.likeService.unlike(this.post._id)
-      .then(() => this.reloadPost())
-      .catch(err => {
-        if (err.error) {
-          this.toastrService.error(err.error.message, '좋아요 취소 중 에러');
-        } else {
-          this.toastrService.error(err.message, '좋아요 취소 중 에러');
-        }
-      });
+    if (!this.likeLoading) {
+
+      this.likeLoading = true;
+
+      this.likeService.unlike(this.post._id)
+        .then(() => {
+          this.reloadPost();
+          this.likeLoading = false;
+        })
+        .catch(err => {
+          this.likeLoading = false;
+          if (err.error) {
+            this.toastrService.error(err.error.message, '좋아요 취소 중 에러');
+          } else {
+            this.toastrService.error(err.message, '좋아요 취소 중 에러');
+          }
+        });
+
+    }
 
   }
 
